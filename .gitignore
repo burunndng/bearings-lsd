@@ -1,20 +1,15 @@
-# Build output — regenerated, never committed
-dist/
-.astro/
+# v0 sandbox internal files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+.vercel/
 
-# Dependencies
-node_modules/
+# Environment variables
+.env*.local
 
-# Local environment / secrets
-.env
-.env.*
-!.env.example
-
-# OS noise
+# Common ignores
+node_modules
+.next/
 .DS_Store
-Thumbs.db
-
-# Editor
-*.swp
-.idea/
-.vscode/
