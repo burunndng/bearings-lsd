@@ -245,36 +245,21 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="mt-8 grid overflow-hidden rounded-lg border border-border bg-card lg:grid-cols-[0.8fr_1.2fr]">
-              <div className="relative min-h-64 border-b border-border lg:min-h-80 lg:border-r lg:border-b-0">
-                <Image
-                  src="/images/integration-plate.png"
-                  alt="Abstract mineral strata and delicate organic filaments illuminated by soft moonlight."
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-card/40"
-                />
-              </div>
-              <div className="flex flex-col justify-center p-6 lg:p-10">
-                <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
-                  Last reflection · 3 days ago
-                </p>
-                <blockquote className="mt-5 max-w-2xl text-pretty text-xl font-medium leading-relaxed text-foreground lg:text-2xl">
-                  “I keep returning to the image of the doorway — less afraid of it
-                  than I expected. I want to sit with what it asked of me.”
-                </blockquote>
-                <a
-                  href="#integration"
-                  className="group mt-7 inline-flex w-fit items-center gap-2 text-sm font-medium text-primary transition-colors hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                >
-                  Continue this reflection
-                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-              </div>
+            <div className="mt-8 rounded-lg border border-border bg-card p-6 lg:p-8">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                Last reflection · 3 days ago
+              </p>
+              <blockquote className="mt-4 max-w-2xl text-pretty text-lg font-medium leading-relaxed text-foreground">
+                “I keep returning to the image of the doorway — less afraid of it
+                than I expected. I want to sit with what it asked of me.”
+              </blockquote>
+              <a
+                href="#integration"
+                className="group mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                Continue this reflection
+                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
             </div>
           </div>
         </section>
