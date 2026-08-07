@@ -1,0 +1,24 @@
+# ============================================================
+# Bearings — HTTP headers (Netlify / Cloudflare Pages format)
+# Strict CSP: connect-src 'self' enforces the no-external-data
+# promise at the browser level. Any future external resource is a
+# deliberate, visible edit here. See technical + privacy analysis.
+#
+# script-src and style-src are deliberately NOT set here. They are
+# delegated to the per-page CSP <meta> emitted by Astro
+# (security.csp in astro.config.mjs), which carries a sha256 hash
+# for every inline script/style the build produces. If this header
+# also declared script-src without those hashes, the two policies
+# would intersect and every inline script would be blocked — the
+# entire app (notes, sessions, theme, NightField) would be dead in
+# production. scripts/check-csp.js verifies the built pages keep
+# that contract. A page with no meta CSP is a build failure.
+# ============================================================
+
+/*
+  Content-Security-Policy: connect-src 'self'; img-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin

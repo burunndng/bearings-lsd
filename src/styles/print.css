@@ -1,0 +1,97 @@
+/* ============================================================
+   Bearings — Print stylesheet (the Sheet)
+   Paper is the artifact; the on-screen form is only a means to
+   it. Requirements (Phase 3):
+   - Force the light palette regardless of data-theme. Dark-theme
+     printing is unreadable and burns ink.
+   - Strip all decorative chrome: site header, safety footer
+     (position: fixed — would overlay/repeat without this), the
+     night ground layers, NightField canvas, and the film-grain
+     pseudo-element (body::after, fixed, z-index: 90).
+   - Keep if-then rows and the safety strip from breaking mid-row
+     across a page boundary.
+   - Target one sheet, A4 or Letter, at a legible size.
+   ============================================================ */
+
+@media print {
+  :root,
+  :root[data-theme="dark"] {
+    --paper: #ffffff;
+    --paper-deep: #f4f0e8;
+    --paper-raised: #ffffff;
+    --ink: #111111;
+    --ink-soft: #333333;
+    --ink-faint: #555555;
+    --rule: #999999;
+
+    --gold: #7c5411;
+    --gold-bright: #7c5411;
+    --gold-glow: transparent;
+
+    --route-pause: #333333;
+    --route-clinician: #333333;
+    --route-urgent: #111111;
+
+    --paper-grain-opacity: 0;
+    --ground-display: none;
+
+    color-scheme: light;
+  }
+
+  /* Decorative chrome never prints. */
+  .site-head,
+  .safety-footer,
+  .ground,
+  #nightfield,
+  .skip-link {
+    display: none !important;
+  }
+
+  body::after {
+    /* film grain: fixed, z-index 90, above everything (global.css) */
+    content: none !important;
+  }
+
+  main {
+    padding-bottom: 0 !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 12mm;
+  }
+
+  .sheet-page {
+    font-size: 11pt;
+    line-height: 1.3;
+    color: #111111;
+  }
+
+  .sheet-page h1 {
+    font-size: 16pt;
+  }
+
+  .sheet-page h2 {
+    font-size: 12pt;
+    margin-top: 8pt;
+  }
+
+  .sheet-page .no-print {
+    display: none !important;
+  }
+
+  .sheet-page .if-then-row,
+  .sheet-page .safety-strip {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .sheet-page {
+    max-width: 100%;
+  }
+}

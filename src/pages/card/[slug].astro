@@ -1,0 +1,223 @@
+---
+/* ============================================================
+   Bearings — Card detail
+   A single open-shelf card. Short, readable. Optional reflection
+   prompt with a visible Skip. No "next step" — a shelf, not a path.
+   ============================================================ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CardNote from "../../components/CardNote.svelte";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { SHELF_LABELS, SHELF_PATHS } from "../../lib/shelves.ts";
+
+export async function getStaticPaths() {
+  const allCards = await getCollection("cards");
+  const cards = allCards.filter((c) => !c.data.draft);
+  return cards.map((card) => ({
+    params: { slug: card.id },
+    props: {
+      card,
+      /* related cross-links resolve against ALL cards (including
+         drafts, filtered below) so a published card can still name
+         a related id without lint-links flagging it, but a draft
+         target simply won't render a link — never a dead link. */
+      allCards,
+    },
+  }));
+}
+
+interface Props {
+  card: CollectionEntry<"cards">;
+  allCards: CollectionEntry<"cards">[];
+}
+
+const { card, allCards } = Astro.props;
+const { Content } = await render(card);
+
+const shelfLabel = SHELF_LABELS[card.data.shelf];
+const shelfPath = SHELF_PATHS[card.data.shelf];
+
+const fmt = (d?: Date) =>
+  d ? d.toLocaleDateString("en-CA", { year: "numeric", month: "long" }) : null;
+
+/* related cards, resolved by id. Labelled "related" — never "next":
+   see PRODUCT_BOUNDARY.md hard commitments (no sequence implied). */
+const relatedCards = card.data.related
+  .map((id) => allCards.find((c) => c.id === id))
+  .filter((c): c is CollectionEntry<"cards"> => Boolean(c) && !c!.data.draft);
+
+/* inline safety embed: pulled at request time so wording always
+   matches the single source of truth on /safety, never duplicated. */
+const safetyEntry = card.data.safetyRoute
+  ? (await getCollection("safety")).find(
+      (s) => s.data.route === card.data.safetyRoute && !s.data.draft,
+    )
+  : undefined;
+
+const SAFETY_LABELS: Record<string, string> = {
+  pause: "Consider pausing or reconsidering",
+  clinician: "Talk with a qualified clinician",
+  urgent: "Get urgent help now",
+};
+---
+
+<BaseLayout title={`${card.data.title} — Bearings`} section={card.data.shelf}>
+  <article class="reading">
+    <p class="crumb">
+      <a href={shelfPath}>&larr; {shelfLabel}</a>
+    </p>
+    <h1>{card.data.title}</h1>
+    {
+      fmt(card.data.lastReviewed) && (
+        <p class="rev meta">Last reviewed {fmt(card.data.lastReviewed)}</p>
+      )
+    }
+
+    <div class="body">
+      <Content />
+    </div>
+
+    {
+      safetyEntry && (
+        <aside class={`safety-embed safety-embed--${card.data.safetyRoute}`}>
+          <p class="safety-kicker meta">
+            {SAFETY_LABELS[card.data.safetyRoute as string]}
+          </p>
+          {safetyEntry.data.condition && (
+            <p class="safety-condition">{safetyEntry.data.condition}</p>
+          )}
+          <p>
+            <a href="/safety">See the full page on this &rarr;</a>
+          </p>
+        </aside>
+      )
+    }
+
+    {
+      card.data.optionalPrompt && (
+        <CardNote client:load cardId={card.id} shelfLabel={shelfLabel} shelfPath={shelfPath} />
+      )
+    }
+
+    {
+      card.data.sources.length > 0 && (
+        <section class="sources">
+          <h2>Sources</h2>
+          <ul>
+            {card.data.sources.map((s) => (
+              <li>
+                {s.url ? <a href={s.url}>{s.cite}</a> : s.cite}
+                {s.year && ` (${s.year})`}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      relatedCards.length > 0 && (
+        <nav class="related" aria-labelledby="related-h">
+          <h2 id="related-h">Related</h2>
+          <ul>
+            {relatedCards.map((r) => (
+              <li>
+                <a href={`/card/${r.id}`}>{r.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    margin-top: var(--space-5);
+  }
+  .crumb {
+    margin-bottom: var(--space-3);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .crumb a {
+    color: var(--ink-faint);
+    text-decoration-color: var(--rule);
+    transition: color 0.25s ease;
+  }
+  .crumb a:hover {
+    color: var(--gold-bright);
+  }
+  .body {
+    margin-top: var(--space-4);
+  }
+  .body :global(p) {
+    margin-bottom: var(--space-3);
+  }
+  .body :global(ul) {
+    margin-bottom: var(--space-3);
+    padding-left: var(--space-4);
+  }
+  .body :global(li) {
+    margin-bottom: var(--space-1);
+  }
+  .rev {
+    text-transform: uppercase;
+    margin-top: var(--space-2);
+    color: var(--ink-faint);
+  }
+  .safety-embed {
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+    border: 1px solid var(--route-pause);
+    border-radius: var(--radius);
+  }
+  .safety-embed--urgent {
+    border-color: var(--route-urgent);
+    border-width: 2px;
+  }
+  .safety-embed--clinician {
+    border-color: var(--route-clinician);
+  }
+  .safety-kicker {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: var(--space-2);
+  }
+  .safety-condition {
+    color: var(--ink-soft);
+    margin-bottom: var(--space-2);
+  }
+  .sources {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--rule);
+  }
+  .sources h2,
+  .related h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--space-3);
+  }
+  .sources li {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    margin-bottom: var(--space-2);
+  }
+  .related {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-5);
+  }
+  .related ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .related a {
+    font-size: var(--size-sm);
+  }
+</style>

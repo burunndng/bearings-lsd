@@ -1,0 +1,62 @@
+---
+/* ============================================================
+   Bearings — /sessions (the depth track)
+
+   Deliberately its own entry point rather than woven into /before
+   or /integration. Most people opening this app want one card and
+   an early night; this page is for the much smaller case of
+   someone doing repeated, deliberate, solo work and wanting a
+   record across occasions. Keeping it separate means the default
+   path never acquires the weight of a program, and nobody has to
+   opt out of something they did not ask for.
+
+   Not linked from the shelves for the same reason. It is in the
+   nav, findable, and otherwise quiet.
+   ============================================================ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SessionTracker from "../components/SessionTracker.svelte";
+import CoolingLedger from "../components/CoolingLedger.svelte";
+---
+
+<BaseLayout
+  title="Sessions — Bearings"
+  description="An optional record across occasions: a question held beforehand, what you wrote after, and decisions you want to look at again."
+  section="sessions"
+>
+  <section class="reading">
+    <p class="kicker">On this device only</p>
+    <h1>Sessions</h1>
+    <p class="lede">
+      For repeated, deliberate work. This page keeps a plain record across
+      occasions — a question you chose to hold, what you wrote in the days
+      after, and any decision you want to reread later.
+    </p>
+    <p>
+      It never interprets any of it. There is no progress here, nothing to
+      complete, and no version of using this page correctly. If you came for a
+      single experience and have no interest in tracking anything, the rest of
+      Bearings works without this page and you can ignore it entirely.
+    </p>
+    <p class="detail">
+      Everything below is stored unencrypted in this browser, like the rest of
+      your notes. Anyone with access to this device and an unlocked browser can
+      read it. Settings has a copy-out and a delete-everything.
+    </p>
+  </section>
+
+  <SessionTracker client:load />
+  <CoolingLedger client:load />
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-5);
+  }
+  .detail {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    margin-top: var(--space-4);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--rule);
+  }
+</style>

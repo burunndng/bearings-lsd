@@ -1,0 +1,81 @@
+---
+/* ============================================================
+   Bearings — SafetyFooter
+   Persistent, never hidden, never in a hamburger, never scrolled
+   off-screen. Reachable in under two taps for a distressed user.
+   Renders as static HTML — works with JS disabled and before any
+   island hydrates (UX analysis: distressed user, slow connection).
+   Quiet in the visual hierarchy, but always present.
+   ============================================================ */
+---
+
+<footer class="safety-footer" aria-label="Safety and support">
+  <a class="safety-link" href="/safety">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label">Support &amp; safety</span>
+    <span class="hint">If something feels urgent, this is always here.</span>
+  </a>
+</footer>
+
+<style>
+  .safety-footer {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 50;
+    background: var(--paper-deep);
+    border-top: 1px solid var(--rule);
+    /* not alarmist — quiet, but unmistakably always-present */
+  }
+  .safety-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding: var(--space-2) var(--space-3);
+    min-height: var(--tap-min, 48px);
+    text-decoration: none;
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: var(--size-sm);
+  }
+  .safety-link:hover .label,
+  .safety-link:focus .label {
+    text-decoration: underline;
+  }
+  .dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--route-urgent);
+    align-self: center;
+    flex: none;
+    /* one slow breath, 6s, tiny amplitude — presence, not alarm.
+       Stilled by the global motion contract. */
+    animation: dot-breathe 6s ease-in-out infinite;
+  }
+  @keyframes dot-breathe {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+      opacity: 0.75;
+    }
+    50% {
+      box-shadow: 0 0 10px 1px var(--route-urgent);
+      opacity: 1;
+    }
+  }
+  .label {
+    font-weight: 600;
+  }
+  .hint {
+    color: var(--ink-faint);
+  }
+  @media (max-width: 30rem) {
+    .hint {
+      flex-basis: 100%;
+    }
+  }
+</style>

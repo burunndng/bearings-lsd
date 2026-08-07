@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "skills": {
+    "ai-research-explore": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-research-explore/SKILL.md",
+      "computedHash": "7816168fcb2853a208fd0f7c95efea52e81a383f53d94318e43eb695199f6356"
+    },
+    "ai-research-reproduction": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-research-reproduction/SKILL.md",
+      "computedHash": "0f0a5057914e7441348ffec942661e060adea1ee588a23df4196b4c4436e255b"
+    },
+    "analyze-project": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/analyze-project/SKILL.md",
+      "computedHash": "8c44c57afd6cb3f769eec4290494158f1787eacdd39e84fd5f271ec29438cea0"
+    },
+    "env-and-assets-bootstrap": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/env-and-assets-bootstrap/SKILL.md",
+      "computedHash": "9017e7b66f62cce56ccaad32633db2fc21271336c92fa415f35c10ffea6ef0e5"
+    },
+    "explore-code": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/explore-code/SKILL.md",
+      "computedHash": "9e380566dd6f89f299a7442c42d8cbb5b1d96abb1984726bc10a93ced5538d86"
+    },
+    "explore-run": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/explore-run/SKILL.md",
+      "computedHash": "74c42d1660d50cdfc993356e2e06ad5141c734e5f78a54c42d535fd9eb73eb4d"
+    },
+    "minimal-run-and-audit": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/minimal-run-and-audit/SKILL.md",
+      "computedHash": "8ee31a207a45e4866fd591534a187a65ed7f81ccfdd8df55912bfcef69e4a840"
+    },
+    "paper-context-resolver": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/paper-context-resolver/SKILL.md",
+      "computedHash": "4d8d8878f64c6b6d72cfbbb2e5a70fd2d33328a09be218590f7c4a050dbd16d9"
+    },
+    "repo-intake-and-plan": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/repo-intake-and-plan/SKILL.md",
+      "computedHash": "222f780e78a213157424b1e87eba6146b64743129384d808ddced2a1beb1ac50"
+    },
+    "run-train": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/run-train/SKILL.md",
+      "computedHash": "27ad68d6ba9cf1a0f6d939a26a3699843dbc394b91d26f0dd00bef771cd27c13"
+    },
+    "safe-debug": {
+      "source": "lllllllama/rigorpilot-skills",
+      "sourceType": "github",
+      "skillPath": "skills/safe-debug/SKILL.md",
+      "computedHash": "7b78aa32026eaf0a5372b6bb0bf944fc10f2e665158a8c8e8d1c8622a1345130"
+    }
+  }
+}

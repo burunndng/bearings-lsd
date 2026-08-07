@@ -1,0 +1,340 @@
+---
+/* ============================================================
+   Bearings — Base layout (the shell everything lives inside)
+   - skip link first focusable element (a11y)
+   - theme + motion from saved choice or system, no flash (inline)
+   - dark ceremonial terminal: scanlines + grain + mote field
+   - register system: before=preparation(uv), integration=amber
+   - SafetyFooter always present, never hidden
+   - no third-party scripts (CSP connect-src 'self')
+   ============================================================ */
+import "../styles/global.css";
+import SafetyFooter from "../components/SafetyFooter.astro";
+import NightField from "../components/NightField.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  section?:
+    | "before"
+    | "between"
+    | "integration"
+    | "learn"
+    | "resources"
+    | "notes"
+    | "sessions"
+    | "settings"
+    | "safety";
+}
+
+const {
+  title = "Bearings",
+  description = "A place to get your bearings. Before, after, or somewhere in between.",
+  section,
+} = Astro.props;
+
+/* Register: integration shelf gets warm amber register; everything
+   else gets the default ultraviolet preparation register. */
+const register = section === "integration" ? "integration" : "preparation";
+
+const nav = [
+  { href: "/before", label: "Before", id: "before" },
+  { href: "/between", label: "In between", id: "between" },
+  { href: "/integration", label: "Integration", id: "integration" },
+  { href: "/learn", label: "Learn", id: "learn" },
+  { href: "/resources", label: "Resources", id: "resources" },
+  { href: "/notes", label: "Notes", id: "notes" },
+  { href: "/sessions", label: "Sessions", id: "sessions" },
+  { href: "/settings", label: "Settings", id: "settings" },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f4f1" media="(prefers-color-scheme: light)" />
+    <title>{title}</title>
+
+    {/* No-flash theme + motion: set data-theme and data-motion before
+        paint. Respects explicit user choices in localStorage, else
+        system preference. This is the only head inline script; CSP
+        allows it via hash. Kept tiny and self-contained. */}
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem("bearings-theme");
+          if (saved === "light" || saved === "dark") {
+            document.documentElement.setAttribute("data-theme", saved);
+          }
+          if (localStorage.getItem("bearings-motion") === "reduce") {
+            document.documentElement.setAttribute("data-motion", "reduce");
+          }
+        } catch (e) {
+          /* localStorage unavailable (private mode) — fall back to
+             system preference via CSS media query. No action needed. */
+        }
+      })();
+    </script>
+  </head>
+  <body data-register={register}>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <NightField />
+
+    <header class="site-head wrap">
+      <a class="wordmark" href="/" aria-label="Bearings — home">
+        <img class="compass" src="/icons/icon-192.png" alt="" width="20" height="20" aria-hidden="true" />
+        <span>bearings</span>
+      </a>
+      <div class="head-right">
+        {/* Native <details>/<summary>: no JS, no third-party menu
+            library, keyboard-accessible by default. At wide widths
+            this renders as display:contents (an ordinary nav row);
+            only below the narrow breakpoint does it become a
+            disclosure toggle, so 8 nav items never wrap into two or
+            three rows above content on a phone. */}
+        <details class="nav-toggle">
+          <summary aria-label="Sections menu">
+            <span class="nav-toggle-mark" aria-hidden="true"></span>
+            Sections
+          </summary>
+          <nav class="site-nav" aria-label="Sections">
+            {
+              nav.map((item) => (
+                <a
+                  href={item.href}
+                  aria-current={section === item.id ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </details>
+        <img
+          class="brand-logo"
+          src="/img/s3rke-logo.png"
+          alt="S3rke"
+          width="28"
+          height="28"
+        />
+      </div>
+    </header>
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <SafetyFooter />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: var(--space-2) var(--space-3);
+    background: var(--ink);
+    color: var(--paper);
+    z-index: 100;
+    border-radius: 0 0 4px 0;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+  /* Quiet chrome: mono meta voice, present but never loud. */
+  .site-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    font-family: var(--font-meta);
+    font-size: 0.78rem;
+    letter-spacing: 0.34em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .wordmark .compass {
+    flex: none;
+    color: var(--ink-soft);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wordmark:hover .compass,
+  .wordmark:focus-visible .compass {
+    transform: rotate(45deg);
+  }
+  /* Wide viewports: the toggle disappears entirely and the nav reads
+     as a plain inline row, same as before this change existed.
+     display: contents un-boxes <details> so it imposes no layout of
+     its own — <summary> and <nav> become direct flex children of
+     .head-right instead, and .summary-only rules below hide the
+     toggle chrome at this width. */
+  @media (min-width: 52rem) {
+    .nav-toggle {
+      display: contents;
+    }
+    .nav-toggle summary {
+      display: none;
+    }
+    /* <details> defaults to closed and nothing here forces it open at
+       this width — without this override the nav would be invisible
+       on desktop since the [open]-gated display:flex rule below would
+       never apply. */
+    .nav-toggle .site-nav {
+      display: flex;
+    }
+  }
+
+  /* Narrow viewports: a real disclosure. Closed by default so eight
+     section links never occupy vertical space above content — this
+     is the fix for the header wrapping into two or three rows on a
+     phone before someone reaches a page's content, urgent or not. */
+  .nav-toggle summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    padding-inline: var(--space-2);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    cursor: pointer;
+    list-style: none;
+  }
+  .nav-toggle summary::-webkit-details-marker {
+    display: none;
+  }
+  .nav-toggle summary:hover,
+  .nav-toggle summary:focus-visible {
+    color: var(--gold-bright);
+  }
+  .nav-toggle-mark {
+    display: inline-block;
+    width: 0.9em;
+    height: 0.9em;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    position: relative;
+  }
+  .nav-toggle-mark::before,
+  .nav-toggle-mark::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .nav-toggle-mark::before {
+    width: 0.5em;
+    height: 1px;
+  }
+  .nav-toggle-mark::after {
+    width: 1px;
+    height: 0.5em;
+    transition: transform 0.2s ease;
+  }
+  .nav-toggle[open] .nav-toggle-mark::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .nav-toggle .site-nav {
+    display: none;
+  }
+  .nav-toggle[open] .site-nav {
+    display: flex;
+  }
+  @media (max-width: 51.9375rem) {
+    .nav-toggle {
+      position: relative;
+    }
+    .nav-toggle[open] .site-nav {
+      flex-direction: column;
+      align-items: flex-start;
+      position: absolute;
+      right: 0;
+      top: calc(100% + var(--space-2));
+      z-index: 20;
+      min-width: 12rem;
+      padding: var(--space-2) var(--space-3);
+      background: var(--void-2);
+      border: 1px solid var(--grid-line);
+      border-radius: var(--radius);
+    }
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+  }
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-faint);
+    transition: color 0.25s ease;
+  }
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
+    color: var(--gold-bright);
+  }
+  .site-nav a[aria-current="page"] {
+    color: var(--gold);
+  }
+  .site-nav a[aria-current="page"]::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+    margin-right: var(--space-1);
+  }
+
+  /* Right side of the header: nav grouped with the S3rke brand mark.
+     Kept together so the wordmark stays flush left and these two
+     share the right edge as a single flex group. */
+  .head-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .brand-logo {
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    object-fit: contain;
+  }
+
+  main {
+    /* leave room so the fixed SafetyFooter never covers content */
+    padding-bottom: var(--space-7);
+  }
+</style>

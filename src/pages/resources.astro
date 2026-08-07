@@ -1,0 +1,115 @@
+---
+/* ============================================================
+   Bearings — Resources
+   Vetted outside support and reading. Links are user-initiated
+   by definition (local-first holds); verification dates are
+   shown so visitors can judge freshness themselves.
+   ============================================================ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const entries = (await getCollection("resources")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const KIND_LABELS: Record<string, string> = {
+  "peer-line": "Someone to talk to",
+  directory: "Finding people",
+  hub: "Education",
+  reading: "Reading",
+};
+const KIND_ORDER = ["peer-line", "directory", "hub", "reading"];
+
+const groups = KIND_ORDER.map((kind) => ({
+  kind,
+  label: KIND_LABELS[kind],
+  items: entries.filter((e) => e.data.kind === kind),
+})).filter((g) => g.items.length > 0);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-CA", { year: "numeric", month: "long" });
+---
+
+<BaseLayout title="Resources — Bearings" section="resources">
+  <section class="reading">
+    <p class="kicker">{entries.length} links · dates checked shown</p>
+    <h1>Resources</h1>
+    <p class="lede">
+      Outside support and further reading. Nothing here is required, and
+      nothing on this page can see you — a link only does anything if you
+      choose it.
+    </p>
+  </section>
+
+  {
+    groups.map((group) => (
+      <section class="group" aria-labelledby={`k-${group.kind}`}>
+        <h2 class="group-h" id={`k-${group.kind}`}>
+          {group.label}
+        </h2>
+        <ul class="shelf">
+          {group.items.map((e) => (
+            <li class="card resource">
+              <h3>
+                {e.data.url ? (
+                  <a href={e.data.url} rel="noopener noreferrer">
+                    {e.data.name}
+                  </a>
+                ) : (
+                  e.data.name
+                )}
+              </h3>
+              <p>{e.data.description}</p>
+              {e.data.caveat && <p class="caveat">{e.data.caveat}</p>}
+              <p class="meta-line">
+                {e.data.access} · checked {fmt(e.data.lastVerified)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <p class="section-note">
+    The evidence behind the practices themselves lives in{" "}
+    <a href="/learn/what-is-known-about-integration">Learn</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  .reading {
+    margin-top: var(--space-5);
+  }
+  .lede {
+    margin-bottom: var(--space-5);
+  }
+  .group {
+    margin-bottom: var(--space-6);
+  }
+  .group-h {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 400;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: var(--space-3);
+  }
+  .resource {
+    padding: var(--space-3) var(--space-4);
+  }
+  .caveat {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+  }
+  .meta-line {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>

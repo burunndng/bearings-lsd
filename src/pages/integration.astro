@@ -1,0 +1,58 @@
+---
+/* ============================================================
+   Bearings — Integration shelf (formerly /after)
+   "Integration" is used deliberately: it is the accurate term for
+   this work. What the voice guide forbids is the wellness-cliche
+   construction of it, not the noun itself. See the forbidden list
+   in VOICE_GUIDE.md for the exact phrasing that stays out.
+
+   Ambiguity is a valid outcome — those cards live here as
+   first-class content, not fallback states. Nothing here is owed.
+   ============================================================ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ShelfList from "../components/ShelfList.astro";
+import ShelfFilter from "../components/ShelfFilter.svelte";
+import { getCollection } from "astro:content";
+
+const cards = (await getCollection("cards")).filter(
+  (c) => c.data.shelf === "integration" && !c.data.draft,
+);
+---
+
+<BaseLayout title="Integration — Bearings" section="integration">
+  <section class="reading">
+    <p class="kicker">{cards.length} cards · none required</p>
+    <h1>Integration</h1>
+    <p class="lede">
+      Rest, notes, connection, unsettled feelings, resources. Integration is
+      not a task with a deadline, and not every experience contains a message
+      or asks anything of you. Take what helps.
+    </p>
+    <p class="notes-link">
+      <a href="/notes">Open private notes</a> ·{" "}
+      <a href="/resources">Outside support and reading</a>
+    </p>
+  </section>
+
+  <ShelfFilter client:load />
+  <ShelfList cards={cards} shelf="integration" />
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-5);
+  }
+  .lede {
+    margin-bottom: var(--space-3);
+  }
+  .notes-link {
+    margin-bottom: var(--space-5);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .notes-link a {
+    color: var(--gold);
+  }
+</style>

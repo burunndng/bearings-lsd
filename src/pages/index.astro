@@ -1,0 +1,100 @@
+---
+/* ============================================================
+   Bearings — Home
+   No "Start your transformation." No funnel. A place to get
+   bearings. Equal-weight chooser, three plain sections.
+   ============================================================ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MotivationChooser from "../components/MotivationChooser.svelte";
+---
+
+<BaseLayout>
+  <section class="hero reading">
+    <p class="kicker">// bearings</p>
+    <h1>A place to get your <em>bearings</em>.</h1>
+    <p class="lede">
+      Before, after, or somewhere in between: explore what feels useful
+      today. No perfect intention required. Take what helps; leave what
+      does not.
+    </p>
+  </section>
+
+  <section class="chooser" aria-labelledby="chooser-h">
+    <h2 id="chooser-h" class="section-h">What brings you here?</h2>
+    <p class="section-note">
+      There is no required reason. Pick whatever fits right now, or don't —
+      you can browse everything either way.
+    </p>
+    <MotivationChooser client:visible />
+  </section>
+
+  <div class="rule--north" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+    >
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 12 L12 4.5"></path>
+      <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
+    </svg>
+  </div>
+
+  <nav class="sections" aria-label="Sections">
+    <a class="card" href="/before">
+      <h3>Before</h3>
+      <p>Logistics, support, boundaries, expectations, safety.</p>
+    </a>
+    <a class="card" href="/between">
+      <h3>In between</h3>
+      <p>While something is underway, for you or someone you are with.</p>
+    </a>
+    <a class="card" href="/integration">
+      <h3>Integration</h3>
+      <p>Rest, notes, connection, unsettled feelings, resources.</p>
+    </a>
+    <a class="card" href="/learn">
+      <h3>Learn</h3>
+      <p>Evidence, uncertainty, cultural context, harm reduction.</p>
+    </a>
+  </nav>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    z-index: 2;
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+  h1 {
+    font-size: var(--size-display);
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+  }
+  .lede {
+    font-size: var(--size-lg);
+    color: var(--dim);
+    margin-top: var(--space-3);
+    max-width: 46ch;
+  }
+  .section-h {
+    font-size: var(--size-xl);
+  }
+  .chooser {
+    position: relative;
+    z-index: 2;
+    margin-bottom: var(--space-6);
+  }
+  .sections {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    margin-bottom: var(--space-6);
+  }
+</style>

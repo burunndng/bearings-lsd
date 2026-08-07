@@ -1,0 +1,436 @@
+/* ============================================================
+   Bearings — Global base styles
+   NO IDENTITY design system: dark ceremonial terminal.
+   Scanlines over near-black void. Phosphor text. Node-graph
+   geometry. Ultraviolet preparation register, amber integration
+   register, magenta for thresholds. Depth from glow and line
+   weight, not elevation.
+
+   Motion contract (photosafety): flicker capped at 3% amplitude,
+   scanline drift imperceptible, glitch event-triggered ≤200ms.
+   Everything stills under prefers-reduced-motion or data-motion.
+   ============================================================ */
+
+@import "./tokens.css";
+@import "./fonts.css";
+@import "./print.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background: var(--void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:root[data-motion="reduce"] { scroll-behavior: auto; }
+:root[data-motion="reduce"] *,
+:root[data-motion="reduce"] *::before,
+:root[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--void);
+  color: var(--phosphor);
+  font-family: var(--font-body);
+  font-size: var(--size-base);
+  line-height: var(--leading-body);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+::selection { background: var(--uv); color: var(--void); }
+[data-register="integration"] ::selection { background: var(--amber); }
+
+/* ============================================================
+   CRT TEXTURE LAYERS — scanlines, refresh band, grain
+   The soul of the terminal. All fixed, pointer-events: none.
+   ============================================================ */
+
+/* Scanlines: repeating 3px gradient, the CRT screen */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    var(--scanline) 2px,
+    var(--scanline) 3px
+  );
+  animation: scanline-drift 8s linear infinite;
+}
+@keyframes scanline-drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
+:root[data-motion="reduce"] body::before { animation: none; }
+
+/* Film grain — faint tactile noise above scanlines */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 91;
+  pointer-events: none;
+  opacity: var(--paper-grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.site-head, main, .safety-footer { position: relative; z-index: 2; }
+
+/* ============================================================
+   REGISTER SYSTEM — before = ultraviolet, integration = amber
+   Set via data-register on <body> in BaseLayout.
+   ============================================================ */
+
+[data-register="integration"] {
+  --dim: var(--dim-warm);
+}
+[data-register="integration"] .kicker { color: var(--amber); }
+[data-register="integration"] a { text-decoration-color: var(--amber); }
+
+/* ============================================================
+   HEADINGS — Cinzel inscriptional capitals
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  color: var(--phosphor);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--size-2xl);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+h2 {
+  font-size: var(--size-xl);
+  letter-spacing: 0.04em;
+}
+h3 {
+  font-size: var(--size-lg);
+  letter-spacing: 0.02em;
+}
+
+/* Italic emphasis — amber phosphor */
+h1 em, h2 em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--amber);
+  text-shadow: 0 0 14px rgba(255, 200, 94, 0.45);
+}
+
+p { max-width: var(--measure); }
+
+a {
+  color: var(--phosphor);
+  text-decoration-color: var(--uv);
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 150ms;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+/* ============================================================
+   META VOICE — mono labels, section indices, data
+   ============================================================ */
+.kicker {
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  letter-spacing: var(--meta-tracking);
+  text-transform: uppercase;
+  color: var(--uv);
+  margin-bottom: var(--space-3);
+}
+.meta {
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* Phosphor glow utilities */
+.glow-uv { text-shadow: 0 0 14px rgba(154, 107, 255, 0.55); }
+.glow-amber { text-shadow: 0 0 14px rgba(255, 200, 94, 0.45); }
+.glow-indigo { text-shadow: 0 0 12px rgba(168, 200, 255, 0.5); }
+.glow-magenta { text-shadow: 0 0 12px rgba(232, 56, 109, 0.5); }
+
+/* ============================================================
+   FOCUS — visible, design-language matched
+   ============================================================ */
+:focus-visible {
+  outline: 1px dashed var(--uv);
+  outline-offset: 4px;
+}
+[data-register="integration"] :focus-visible {
+  outline-color: var(--amber);
+}
+
+button, .tap {
+  min-height: var(--tap-min);
+  min-width: var(--tap-min);
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.wrap {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+.reading { max-width: var(--measure); }
+
+.rule {
+  border: 0;
+  border-top: var(--rule-weight) solid var(--grid-line);
+  margin-block: var(--space-5);
+}
+
+/* Compass-tick divider — the instrument mark */
+.rule--north {
+  border: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block: var(--space-5);
+  color: var(--dim);
+}
+.rule--north::before,
+.rule--north::after {
+  content: "";
+  flex: 1;
+  border-top: var(--rule-weight) solid var(--grid-line);
+}
+.rule--north svg {
+  flex: none;
+  color: var(--uv);
+}
+
+.mark {
+  background-image: linear-gradient(
+    to right, transparent,
+    var(--uv) 8%, var(--uv) 92%, transparent
+  );
+  background-repeat: no-repeat;
+  background-position: 0 92%;
+  background-size: 100% 2px;
+  padding-bottom: 0.1em;
+}
+
+/* ============================================================
+   SURFACES — lede, section notes, panels
+   ============================================================ */
+.lede {
+  font-size: var(--size-lg);
+  color: var(--dim);
+  margin-top: var(--space-3);
+  max-width: 52ch;
+  line-height: 1.5;
+}
+.section-note {
+  color: var(--dim);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+  max-width: 52ch;
+}
+
+/* ============================================================
+   CARDS — terminal panels (not rectangles with rounded corners)
+   void-2 fill, 1px grid-line border, 2px radius.
+   No nesting. No shadows. Glow only on the node dot.
+   ============================================================ */
+.shelf {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}
+
+.card {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: var(--space-4);
+  background: var(--void-2);
+  border: 1px solid var(--grid-line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--phosphor);
+  transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
+}
+/* Node dot: one small phosphor point per card, lit on hover */
+.card::after {
+  content: "";
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dim);
+  opacity: 0.5;
+  transition: all 200ms ease-out;
+}
+.card:hover,
+.card:focus-within {
+  border-color: var(--uv);
+  box-shadow: 0 0 12px rgba(154, 107, 255, 0.12);
+}
+[data-register="integration"] .card:hover,
+[data-register="integration"] .card:focus-within {
+  border-color: var(--amber);
+  box-shadow: 0 0 12px rgba(255, 200, 94, 0.1);
+}
+.card:hover::after,
+.card:focus-within::after {
+  background: var(--uv);
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(154, 107, 255, 0.6);
+}
+[data-register="integration"] .card:hover::after,
+[data-register="integration"] .card:focus-within::after {
+  background: var(--amber);
+  box-shadow: 0 0 8px rgba(255, 200, 94, 0.5);
+}
+.card h2, .card h3 {
+  font-size: var(--size-lg);
+  font-weight: 500;
+  transition: color 200ms ease-out;
+}
+.card:hover h2, .card:hover h3,
+.card:focus-within h2, .card:focus-within h3 {
+  color: var(--uv);
+}
+[data-register="integration"] .card:hover h2,
+[data-register="integration"] .card:hover h3 {
+  color: var(--amber);
+}
+.card p {
+  color: var(--dim);
+  font-size: var(--size-sm);
+  margin-top: var(--space-2);
+}
+
+/* ============================================================
+   FLICKER — 3% amplitude, stepped. Photosafe.
+   ============================================================ */
+.flicker {
+  animation: crt-flicker 4.1s steps(1, end) infinite;
+}
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  7% { opacity: 0.985; }
+  8% { opacity: 1; }
+  31% { opacity: 0.975; }
+  32% { opacity: 1; }
+  63% { opacity: 0.985; }
+  64% { opacity: 1; }
+  88% { opacity: 0.97; }
+  89% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flicker { animation: none; }
+}
+:root[data-motion="reduce"] .flicker { animation: none; }
+
+/* ============================================================
+   ANAGLYPH GLITCH — event-triggered only, ≤200ms
+   ============================================================ */
+.glitch-hover { position: relative; display: inline-block; }
+.glitch-hover::before,
+.glitch-hover::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch-hover:hover::before {
+  opacity: 0.85;
+  color: var(--ana-red);
+  transform: translate(-2px, -1px);
+  clip-path: inset(12% 0 58% 0);
+  animation: glitch-settle 180ms steps(2, end) forwards;
+}
+.glitch-hover:hover::after {
+  opacity: 0.85;
+  color: var(--ana-cyan);
+  transform: translate(2px, 1px);
+  clip-path: inset(56% 0 8% 0);
+  animation: glitch-settle 180ms steps(2, end) forwards;
+}
+@keyframes glitch-settle {
+  0% { clip-path: inset(12% 0 58% 0); }
+  50% { clip-path: inset(40% 0 30% 0); }
+  100% { clip-path: inset(0 0 0 0); opacity: 0; }
+}
+
+/* ============================================================
+   NODE PULSE + EDGE DRAW — graph geometry animations
+   ============================================================ */
+@keyframes node-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+.node-active-dot {
+  animation: node-pulse 600ms ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes edge-draw {
+  from { stroke-dashoffset: var(--edge-len, 300); }
+  to { stroke-dashoffset: 0; }
+}
+.edge-draw {
+  stroke-dasharray: var(--edge-len, 300);
+  animation: edge-draw 1000ms var(--ease-expand) forwards;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+main { flex: 1 0 auto; }
