@@ -10,13 +10,27 @@ import MotivationChooser from "../components/MotivationChooser.svelte";
 
 <BaseLayout>
   <section class="hero reading">
-    <p class="kicker">// bearings</p>
-    <h1>A place to get your <em>bearings</em>.</h1>
-    <p class="lede">
-      Before, after, or somewhere in between: explore what feels useful
-      today. No perfect intention required. Take what helps; leave what
-      does not.
-    </p>
+    <div class="hero-copy">
+      <p class="kicker">// bearings</p>
+      <h1>A place to get your <em>bearings</em>.</h1>
+      <p class="lede">
+        Before, after, or somewhere in between: explore what feels useful
+        today. No perfect intention required. Take what helps; leave what
+        does not.
+      </p>
+    </div>
+    <picture class="hero-art">
+      <source srcset="/img/bearings-lockup.webp" type="image/webp" />
+      <img
+        src="/img/bearings-lockup.png"
+        alt=""
+        class="hero-logo"
+        width="608"
+        height="530"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </picture>
   </section>
 
   <section class="chooser" aria-labelledby="chooser-h">
@@ -67,8 +81,26 @@ import MotivationChooser from "../components/MotivationChooser.svelte";
   .hero {
     position: relative;
     z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+    align-items: center;
+    gap: clamp(var(--space-4), 6vw, var(--space-7));
+    max-width: none;
     margin-top: var(--space-6);
     margin-bottom: var(--space-6);
+  }
+  .hero-copy {
+    min-width: 0;
+  }
+  .hero-art {
+    display: block;
+    justify-self: end;
+    width: min(100%, 360px);
+  }
+  .hero-logo {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   h1 {
     font-size: var(--size-display);
@@ -96,5 +128,15 @@ import MotivationChooser from "../components/MotivationChooser.svelte";
     gap: var(--space-3);
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     margin-bottom: var(--space-6);
+  }
+  @media (max-width: 48rem) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .hero-art {
+      justify-self: center;
+      width: min(72vw, 300px);
+    }
   }
 </style>
