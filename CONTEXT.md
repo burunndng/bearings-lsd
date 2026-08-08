@@ -9,10 +9,11 @@ Keep it tight — a glossary, not a handbook. Product posture lives in
 ## The shape of the thing
 
 Bearings is a non-directive companion for informed choice and personal
-reflection around an intense experience. People prepare, reflect, or get
-their bearings — before, in between, or after. Nothing is required and
-nothing is owed to the experience. Local-first by default: nothing leaves
-the device without an explicit, user-initiated action.
+reflection around psychedelic preparation and integration — and around
+other experiences that are intense in their own way. People prepare,
+reflect, or get their bearings — before, in between, or after. Nothing is
+required and nothing is owed to the experience. Local-first by default:
+nothing leaves the device without an explicit, user-initiated action.
 
 ## Content
 

@@ -4,7 +4,7 @@
      The spine of the depth track. Not a program: a session is
      never explicitly "started" or "ended" by the user — it is
      inferred from note timestamps (see lib/sessions.ts), because
-     asking someone to press "begin" before an intense experience
+     asking someone to press "begin" before a psychedelic experience
      and "end" after one asks for an administrative act neither
      moment has room for.
 

@@ -19,7 +19,7 @@ they matter more than they sound like they should.
 
 Music specifically has a documented role. Research on psychedelic-assisted
 therapy has described music as functioning almost like a second, hidden
-guide during a session, shaping the emotional tone of the experience
+guide during a psychedelic session, shaping the emotional tone of the experience
 directly. A playlist downloaded ahead of time, so it plays without a
 signal or an ad breaking in, is a small thing that does real work.
 

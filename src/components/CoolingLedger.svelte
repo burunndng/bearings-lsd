@@ -2,7 +2,7 @@
   /* ============================================================
      Bearings — Cooling-off ledger
 
-     Why this exists: the days after an experience are a common time
+     Why this exists: the days after a psychedelic experience are a common time
      to feel certain about a large decision — quit, leave, confess,
      move — and that certainty is not evidence either way. The
      research on this is thin and mostly self-reported, so this

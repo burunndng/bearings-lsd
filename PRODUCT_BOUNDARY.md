@@ -5,10 +5,11 @@ that pressures the product toward drift.
 
 ## What Bearings is
 
-A non-directive companion for informed choice and personal reflection.
-It helps people prepare, reflect, or get their bearings — before, after, or
-somewhere in between an intense experience. People take what helps and leave
-what does not.
+A non-directive companion for informed choice and personal reflection
+around psychedelic preparation and integration. Many people come here
+for a session they are treating as something closer to therapeutic
+work; some come from a place that is intense in its own way. People take
+what helps and leave what does not.
 
 ## What Bearings is NOT
 
@@ -27,15 +28,18 @@ what does not.
 
 ## Core message
 
-There is no required reason to be here. You can prepare, reflect, or simply
-get your bearings. Take what helps; leave what does not.
+There is no required reason to be here. You can be preparing for or
+integrating a psychedelic experience — or something else that is intense
+in its own way — and you can simply get your bearings. Take what helps;
+leave what does not.
 
 ## The reframe we hold
 
-An intense experience can be enjoyable, confusing, connecting, hard,
-meaningful, ordinary, or mixed. Preparation and reflection help a person make
-choices, care for themselves and others, and decide if any part of it matters
-later. Two ideas held together:
+A psychedelic experience — or anything else intense in its own way —
+can be enjoyable, confusing, connecting, hard, meaningful, ordinary, or
+mixed. Preparation and reflection help a person make choices, care for
+themselves and others, and decide if any part of it matters later. Two
+ideas held together:
 
 1. Some people do want therapeutic insight or change.
 2. Nobody owes the experience a breakthrough, a trauma narrative, a spiritual

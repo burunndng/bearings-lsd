@@ -4,12 +4,12 @@ shelf: before
 motivations: ["close", "support", "difficult", "unsure"]
 tone: practical
 horizon: weeks-before
-summary: "Company shapes an experience as much as anything you take. A few plain questions, whether you'll have people around or not."
+summary: "Company shapes a psychedelic experience as much as anything you take. A few plain questions, whether you'll have people around or not."
 related: ["doing-this-alone"]
 order: 10
 ---
 
-Company shapes an experience as much as anything you take. If you will have
+Company shapes a psychedelic experience as much as anything you take. If you will have
 people around, it is worth thinking through, ahead of time, who will
 actually be there.
 

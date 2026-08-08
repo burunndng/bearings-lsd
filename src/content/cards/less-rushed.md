@@ -4,11 +4,11 @@ shelf: before
 motivations: ["curious", "play", "awe", "difficult", "unsure"]
 tone: practical
 horizon: days-before
-summary: "Time pressure changes an experience. A look at what is driving the clock."
+summary: "Time pressure changes a psychedelic experience. A look at what is driving the clock."
 order: 20
 ---
 
-Time pressure tends to shape an experience, and people often notice it
+Time pressure tends to shape a psychedelic experience, and people often notice it
 more in hindsight than in advance. It is worth looking at what is driving
 the clock before anything begins.
 

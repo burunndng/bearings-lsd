@@ -12,7 +12,7 @@ sources:
 order: 25
 ---
 
-It's common, in the days after an intense experience, to arrive at a big
+It's common, in the days after a psychedelic experience, to arrive at a big
 resolution: to completely change how you live, work, relate to people, or
 see yourself. Some of that clarity is real. Most sweeping resolutions,
 though, tend to fade within days or weeks, once ordinary life resumes and

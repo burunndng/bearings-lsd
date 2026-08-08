@@ -15,7 +15,7 @@ sources:
     year: 2021
 ---
 
-After an intense experience, many people find the body is the easier door.
+After a psychedelic experience, many people find the body is the easier door.
 In one survey of 608 people with extended difficulties, 12% named exercise
 as helpful, 11% breathing strategies, and 10% embodied practices like yoga
 or tai chi. Self-report, no controlled trials — but consistent with what

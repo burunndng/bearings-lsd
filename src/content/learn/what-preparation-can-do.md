@@ -1,6 +1,6 @@
 ---
 title: "What preparation can and cannot do"
-summary: "Context and mindset shape an experience. They do not guarantee one."
+summary: "Context and mindset shape a psychedelic experience. They do not guarantee one."
 order: 10
 lastReviewed: 2026-08-01
 sources:
@@ -17,9 +17,10 @@ sources:
 
 Two things are true at the same time.
 
-Preparation, mindset, and surroundings are associated with how an experience
-tends to go. Early evidence suggests that feeling ready, and being somewhere
-you trust, are linked to experiences people find more manageable.
+Preparation, mindset, and surroundings are associated with how a
+psychedelic experience tends to go. Early evidence suggests that feeling
+ready, and being somewhere you trust, are linked to experiences people
+find more manageable.
 
 And: none of that guarantees anything. A careful setup can still lead to a
 difficult time, and difficult experiences can occasionally have lasting effects

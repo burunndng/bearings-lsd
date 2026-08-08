@@ -21,12 +21,12 @@ sources:
 "Set and setting" — mindset going in, and the physical and social
 environment around the experience — is one of the older ideas in this
 field, and it holds up reasonably well against more recent research.
-Studies looking at what predicts how an experience goes have found that
-factors present before anything starts, like expectation and readiness,
-correlate with people's later reports of how manageable an experience
-felt. That is consistent with a placebo-adjacent mechanism: context and
-expectation shape experience, which is a real effect, not a dismissal of
-the experience itself.
+Studies looking at what predicts how a psychedelic experience goes have
+found that factors present before anything starts, like expectation and
+readiness, correlate with people's later reports of how manageable a
+psychedelic experience felt. That is consistent with a placebo-adjacent
+mechanism: context and expectation shape experience, which is a real
+effect, not a dismissal of the experience itself.
 
 Separately, a psychological flexibility framework — being willing to have
 a difficult feeling rather than needing to control or avoid it — has been

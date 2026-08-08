@@ -1,6 +1,6 @@
 ---
 title: "What integration is and isn't"
-summary: "Looking back at an experience, making what sense of it you can, and carrying whatever matters into ordinary life. Nothing is owed."
+summary: "Looking back at a psychedelic experience, making what sense of it you can, and carrying whatever matters into ordinary life. Nothing is owed."
 order: 40
 lastReviewed: 2026-08-02
 sources:
@@ -12,15 +12,16 @@ sources:
 ---
 
 Integration is the word this field uses for what happens after: revisiting
-an experience, making what sense of it you can, and incorporating anything
-that matters into your life. That is a synthesis of 24 published
-definitions (Bathje and colleagues, 2022) — and even the researchers note
-the term has no single agreed meaning.
+a psychedelic experience, making what sense of it you can, and
+incorporating anything that matters into your life. That is a synthesis
+of 24 published definitions (Bathje and colleagues, 2022) — and even the
+researchers note the term has no single agreed meaning.
 
 Two things are true at once. Some people genuinely want change or
-understanding from an experience, and integration practices are how many
-pursue that. And nobody owes an experience anything — no insight, no
-narrative, no better self. An experience you simply had is complete.
+understanding from a psychedelic experience, and integration practices
+are how many pursue that. And nobody owes an experience anything — no
+insight, no narrative, no better self. An experience you simply had is
+complete.
 
 What integration is not: a task with a deadline, a sign that something
 went wrong, or a requirement for having been there at all. The

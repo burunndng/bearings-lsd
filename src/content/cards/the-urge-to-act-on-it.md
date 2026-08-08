@@ -8,7 +8,7 @@ summary: "A strong pull to change something right now. Worth naming as a pull, n
 order: 15
 ---
 
-Sometimes an experience leaves a strong pull to do something right away —
+Sometimes a psychedelic experience leaves a strong pull to do something right away —
 quit a job, end or start a relationship, move, make a call you've been
 avoiding, tell someone something big. The pull can feel completely clear
 and urgent.

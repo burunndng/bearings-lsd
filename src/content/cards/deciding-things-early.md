@@ -13,8 +13,8 @@ sources:
 order: 5
 ---
 
-Deciding well takes clear thinking, and clear thinking is exactly what an
-intense experience can make harder, for a while. This is not a flaw in you.
+Deciding well takes clear thinking, and clear thinking is exactly what a
+psychedelic experience can make harder, for a while. This is not a flaw in you.
 It is a predictable feature of the state itself.
 
 One thing that reliably survives a state where deliberation is hard: a
