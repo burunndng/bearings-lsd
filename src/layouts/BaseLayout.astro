@@ -20,9 +20,11 @@ interface Props {
     | "between"
     | "integration"
     | "learn"
+    | "combinations"
     | "resources"
     | "notes"
     | "sessions"
+    | "strategy"
     | "settings"
     | "safety";
 }
@@ -42,9 +44,11 @@ const nav = [
   { href: "/between", label: "In between", id: "between" },
   { href: "/integration", label: "Integration", id: "integration" },
   { href: "/learn", label: "Learn", id: "learn" },
+  { href: "/combinations", label: "Combinations", id: "combinations" },
   { href: "/resources", label: "Resources", id: "resources" },
   { href: "/notes", label: "Notes", id: "notes" },
   { href: "/sessions", label: "Sessions", id: "sessions" },
+  { href: "/strategy", label: "Strategy", id: "strategy" },
   { href: "/settings", label: "Settings", id: "settings" },
 ] as const;
 ---
@@ -167,7 +171,7 @@ const nav = [
     min-height: var(--tap-min);
     font-family: var(--font-meta);
     font-size: 0.78rem;
-    letter-spacing: 0.34em;
+    letter-spacing: 0.24em;
     text-transform: lowercase;
     text-decoration: none;
     color: var(--ink);
@@ -215,7 +219,7 @@ const nav = [
     padding-inline: var(--space-2);
     font-family: var(--font-meta);
     font-size: var(--size-meta);
-    letter-spacing: 0.22em;
+    letter-spacing: var(--meta-tracking);
     text-transform: uppercase;
     color: var(--ink-faint);
     cursor: pointer;
@@ -294,7 +298,7 @@ const nav = [
     min-height: var(--tap-min);
     font-family: var(--font-meta);
     font-size: var(--size-meta);
-    letter-spacing: 0.22em;
+    letter-spacing: var(--meta-tracking);
     text-transform: uppercase;
     text-decoration: none;
     color: var(--ink-faint);
@@ -313,7 +317,7 @@ const nav = [
     height: 5px;
     border-radius: 50%;
     background: var(--gold);
-    box-shadow: 0 0 8px var(--gold-glow);
+    box-shadow: var(--glow-dot-amber);
     margin-right: var(--space-1);
   }
 

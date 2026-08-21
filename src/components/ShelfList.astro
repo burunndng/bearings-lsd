@@ -47,6 +47,12 @@ const flat = grouped.length === 0;
           <a href={`/card/${card.id}`} class="card">
             <h2>{card.data.title}</h2>
             {card.data.summary && <p>{card.data.summary}</p>}
+            {card.data.sources.length > 0 && (
+              <p class="sourced">
+                <span aria-hidden="true">†</span> {card.data.sources.length}{" "}
+                {card.data.sources.length === 1 ? "source" : "sources"}
+              </p>
+            )}
           </a>
         </li>
       ))}
@@ -67,6 +73,12 @@ const flat = grouped.length === 0;
                 <a href={`/card/${card.id}`} class="card">
                   <h3>{card.data.title}</h3>
                   {card.data.summary && <p>{card.data.summary}</p>}
+                  {card.data.sources.length > 0 && (
+                    <p class="sourced">
+                      <span aria-hidden="true">†</span> {card.data.sources.length}{" "}
+                      {card.data.sources.length === 1 ? "source" : "sources"}
+                    </p>
+                  )}
                 </a>
               </li>
             ))}
@@ -85,6 +97,12 @@ const flat = grouped.length === 0;
                 <a href={`/card/${card.id}`} class="card">
                   <h3>{card.data.title}</h3>
                   {card.data.summary && <p>{card.data.summary}</p>}
+                  {card.data.sources.length > 0 && (
+                    <p class="sourced">
+                      <span aria-hidden="true">†</span> {card.data.sources.length}{" "}
+                      {card.data.sources.length === 1 ? "source" : "sources"}
+                    </p>
+                  )}
                 </a>
               </li>
             ))}
@@ -130,6 +148,19 @@ const flat = grouped.length === 0;
     display: grid;
     gap: var(--space-6);
     margin-bottom: var(--space-5);
+  }
+  /* Citation marker. Present only when a card carries sources, and
+     deliberately quiet: a reflective card with no factual claim needs
+     no sources, so the ABSENCE of this marker is not a demerit and
+     must not be styled as a missing thing. It answers "is this
+     grounded in something?" before the card is opened, which
+     previously required opening it. */
+  .sourced {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta) !important;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint) !important;
+    margin-top: var(--space-3) !important;
   }
   /* Section headings sit quietly. No group is emphasised over another. */
   .group-h {

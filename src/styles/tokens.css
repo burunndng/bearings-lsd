@@ -16,20 +16,28 @@
   --void: #050507;
   --void-2: #0b0b10;
   --phosphor: #ededf2;
-  --dim: #6e6e7e;
-  --dim-warm: #7e7a72;
+  --dim: #868699;
+  --dim-warm: #8c877f;
   --grid-line: rgba(237, 237, 242, 0.14);
-  --scanline: rgba(255, 255, 255, 0.025);
+  --scanline: rgba(255, 255, 255, 0.012);
 
   /* Signal accents */
   --uv: #9a6bff;
   --amber: #ffc85e;
   --magenta: #e8386d;
   --indigo: #a8c8ff;
+  /* Garnet — deep-work register. Distinct from magenta, which stays
+     reserved for urgent/safety; garnet is contemplative, not alarm. */
+  --garnet: #c05e7e;
+  --glow-garnet: 0 0 12px rgba(192, 94, 126, 0.4);
+  --garnet-wash: rgba(192, 94, 126, 0.09);
 
-  /* Glitch pair (decorative only) */
-  --ana-red: #ff3b30;
-  --ana-cyan: #39e6e0;
+  /* Phosphor glow — a dark-register phenomenon. Off on paper. */
+  --glow-uv: 0 0 14px rgba(154, 107, 255, 0.55);
+  --glow-amber: 0 0 14px rgba(255, 200, 94, 0.45);
+  --glow-indigo: 0 0 12px rgba(168, 200, 255, 0.5);
+  --glow-magenta: 0 0 12px rgba(232, 56, 109, 0.5);
+  --glow-dot-amber: 0 0 8px rgba(255, 200, 94, 0.2);
 
   /* Safety signal — same as magenta; reserved for urgent risk UI */
   --signal: var(--magenta);
@@ -48,7 +56,7 @@
   --paper-raised: var(--void-2);
   --ink: var(--phosphor);
   --ink-soft: var(--dim);
-  --ink-faint: #4a4a56;
+  --ink-faint: #79798c;
   --rule: var(--grid-line);
   --gold: var(--amber);
   --gold-bright: var(--amber);
@@ -76,8 +84,8 @@
   --font-meta: "Space Grotesk", monospace;
 
   --size-base: 1rem;
-  --size-sm: 0.82rem;
-  --size-meta: 0.68rem;
+  --size-sm: 0.875rem;
+  --size-meta: 0.75rem;
   --size-lg: 1.35rem;
   --size-xl: 2rem;
   --size-2xl: 2.6rem;
@@ -87,7 +95,7 @@
   --leading-tight: 1.15;
   --measure: 64ch;
 
-  --meta-tracking: 0.18em;
+  --meta-tracking: 0.14em;
 
   /* Space: Fibonacci-ish but tighter for terminal density */
   --space-1: 0.4rem;
@@ -103,7 +111,7 @@
   --radius-soft: 4px;
   --rule-weight: 1px;
 
-  --paper-grain-opacity: 0.04;
+  --paper-grain-opacity: 0.022;
   --ground-display: block;
 
   --ease-expand: cubic-bezier(0.16, 1, 0.3, 1);
@@ -117,18 +125,25 @@
   --void: #f5f4f1;
   --void-2: #ffffff;
   --phosphor: #15141a;
-  --dim: #6e6e7e;
-  --dim-warm: #7e7a72;
+  --dim: #616170;
+  --dim-warm: #66625c;
   --grid-line: rgba(20, 20, 30, 0.14);
-  --scanline: rgba(0, 0, 0, 0.018);
+  --scanline: rgba(0, 0, 0, 0.008);
 
   --uv: #7b52e0;
-  --amber: #b88a00;
+  --amber: #8c6900;
   --magenta: #c92553;
-  --indigo: #4a78b8;
+  --indigo: #456fab;
+  --garnet: #8a3a52;
 
-  --ana-red: #cc2e25;
-  --ana-cyan: #2a9d98;
+  /* Paper does not glow. */
+  --glow-uv: none;
+  --glow-amber: none;
+  --glow-indigo: none;
+  --glow-magenta: none;
+  --glow-garnet: none;
+  --garnet-wash: rgba(138, 58, 82, 0.07);
+  --glow-dot-amber: none;
 
   --signal: var(--magenta);
   --signal-ink: #ffffff;
@@ -144,11 +159,11 @@
   --paper-raised: var(--void-2);
   --ink: var(--phosphor);
   --ink-soft: var(--dim);
-  --ink-faint: #9a9aa8;
+  --ink-faint: #6d6d77;
   --rule: var(--grid-line);
   --gold: var(--amber);
   --gold-bright: var(--amber);
-  --gold-glow: rgba(184, 138, 0, 0.16);
+  --gold-glow: rgba(140, 105, 0, 0.16);
   --copper: var(--uv);
   --teal: var(--indigo);
   --violet: var(--uv);
@@ -157,11 +172,11 @@
   --cyan: var(--indigo);
   --brass: var(--amber);
   --brass-bright: var(--amber);
-  --brass-glow: rgba(184, 138, 0, 0.16);
+  --brass-glow: rgba(140, 105, 0, 0.16);
   --verdigris: var(--indigo);
   --verdigris-bright: var(--indigo);
 
-  --paper-grain-opacity: 0.025;
+  --paper-grain-opacity: 0.014;
   --ground-display: none;
 
   color-scheme: light;
@@ -174,18 +189,22 @@
     --void: #f5f4f1;
     --void-2: #ffffff;
     --phosphor: #15141a;
-    --dim: #6e6e7e;
-    --dim-warm: #7e7a72;
+    --dim: #616170;
+    --dim-warm: #66625c;
     --grid-line: rgba(20, 20, 30, 0.14);
-    --scanline: rgba(0, 0, 0, 0.018);
+    --scanline: rgba(0, 0, 0, 0.008);
 
     --uv: #7b52e0;
-    --amber: #b88a00;
+    --amber: #8c6900;
     --magenta: #c92553;
-    --indigo: #4a78b8;
+    --indigo: #456fab;
 
-    --ana-red: #cc2e25;
-    --ana-cyan: #2a9d98;
+    /* Paper does not glow. */
+    --glow-uv: none;
+    --glow-amber: none;
+    --glow-indigo: none;
+    --glow-magenta: none;
+    --glow-dot-amber: none;
 
     --signal: var(--magenta);
     --signal-ink: #ffffff;
@@ -199,11 +218,11 @@
     --paper-raised: var(--void-2);
     --ink: var(--phosphor);
     --ink-soft: var(--dim);
-    --ink-faint: #9a9aa8;
+    --ink-faint: #6d6d77;
     --rule: var(--grid-line);
     --gold: var(--amber);
     --gold-bright: var(--amber);
-    --gold-glow: rgba(184, 138, 0, 0.16);
+    --gold-glow: rgba(140, 105, 0, 0.16);
     --copper: var(--uv);
     --teal: var(--indigo);
     --violet: var(--uv);
@@ -212,11 +231,11 @@
     --cyan: var(--indigo);
     --brass: var(--amber);
     --brass-bright: var(--amber);
-    --brass-glow: rgba(184, 138, 0, 0.16);
+    --brass-glow: rgba(140, 105, 0, 0.16);
     --verdigris: var(--indigo);
     --verdigris-bright: var(--indigo);
 
-    --paper-grain-opacity: 0.025;
+    --paper-grain-opacity: 0.014;
     --ground-display: none;
 
     color-scheme: light;

@@ -26,7 +26,7 @@ const fmt = (d?: Date) =>
 ---
 
 <BaseLayout title={`${entry.data.title} — Bearings`} section="learn">
-  <article class="reading">
+  <article class={entry.data.tone === "deep" ? "reading deep" : "reading"}>
     <p class="crumb"><a href="/learn">&larr; Learn</a></p>
     <h1>{entry.data.title}</h1>
     {
@@ -61,6 +61,12 @@ const fmt = (d?: Date) =>
   article {
     margin-top: var(--space-5);
   }
+  /* Deep-work register on the detail page: a garnet rule above the
+     title, same contemplative weight as the shelf card. */
+  article.deep h1 {
+    border-top: 3px solid var(--garnet);
+    padding-top: var(--space-4);
+  }
   .crumb {
     margin-bottom: var(--space-3);
     font-family: var(--font-meta);
@@ -90,6 +96,64 @@ const fmt = (d?: Date) =>
   }
   .body :global(li) {
     margin-bottom: var(--space-1);
+  }
+
+  /* Markdown tables. Wide-prose tables are the failure mode here —
+     three columns of sentences in a grid reads as a wall. These
+     rules keep a table scannable on wide screens and restructure it
+     into stacked cards below the narrow breakpoint, where the first
+     cell of each row becomes that row's heading. */
+  .body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space-4);
+    font-size: var(--size-sm);
+  }
+  .body :global(th) {
+    text-align: left;
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 400;
+    padding: var(--space-2) var(--space-3) var(--space-2) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .body :global(td) {
+    padding: var(--space-3) var(--space-3) var(--space-3) 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: var(--leading-body);
+  }
+  .body :global(td:first-child) {
+    min-width: 9rem;
+  }
+  @media (max-width: 40rem) {
+    .body :global(thead) {
+      display: none;
+    }
+    .body :global(table),
+    .body :global(tbody),
+    .body :global(tr),
+    .body :global(td) {
+      display: block;
+      width: 100%;
+    }
+    .body :global(tr) {
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .body :global(td) {
+      border-bottom: none;
+      padding: 0;
+    }
+    .body :global(td:first-child) {
+      color: var(--gold-bright);
+      margin-bottom: var(--space-1);
+    }
   }
   .sources {
     margin-top: var(--space-6);

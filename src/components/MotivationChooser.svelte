@@ -97,8 +97,8 @@
     border-radius: var(--radius);
     cursor: pointer;
     transition:
-      border-color 0.25s ease,
-      box-shadow 0.25s ease;
+      border-color 160ms var(--ease-expand),
+      box-shadow 160ms var(--ease-expand);
   }
   /* Node dot: unlit until chosen — selection shown by shape AND
      color, never color alone. */
@@ -114,12 +114,15 @@
     border: 1px solid var(--ink-faint);
     background: transparent;
     transition:
-      background-color 0.25s ease,
-      border-color 0.25s ease,
-      box-shadow 0.25s ease;
+      background-color 160ms var(--ease-expand),
+      border-color 160ms var(--ease-expand),
+      box-shadow 160ms var(--ease-expand);
   }
   .opt:hover {
     border-color: var(--ink-faint);
+  }
+  .opt:active:not(:disabled) {
+    transform: translateY(1px);
   }
   .opt.selected {
     border-color: var(--gold);

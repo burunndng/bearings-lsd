@@ -29,17 +29,29 @@ const fmt = (d?: Date) =>
 
   <ul class="shelf">
     {
-      entries.map((e) => (
-        <li>
-          <a href={`/learn/${e.id}`} class="card">
-            <h2>{e.data.title}</h2>
-            {e.data.summary && <p>{e.data.summary}</p>}
-            {fmt(e.data.lastReviewed) && (
-              <p class="rev">Last reviewed {fmt(e.data.lastReviewed)}</p>
-            )}
-          </a>
-        </li>
-      ))
+      entries.map((e) => {
+        /* One quiet meta line rather than a stack of them. Source
+           count is shown because "every claim sourced" is a promise
+           this shelf makes in its own lede — a reader should be able
+           to see it holds before opening the entry, not after. */
+        const reviewed = fmt(e.data.lastReviewed);
+        const count = e.data.sources.length;
+        const meta = [
+          reviewed && `Last reviewed ${reviewed}`,
+          count > 0 && `${count} ${count === 1 ? "source" : "sources"}`,
+        ].filter(Boolean);
+        const deep = e.data.tone === "deep";
+        return (
+          <li>
+            <a href={`/learn/${e.id}`} class={deep ? "card deep" : "card"}>
+              {deep && <p class="tone-tag">Deep work</p>}
+              <h2>{e.data.title}</h2>
+              {e.data.summary && <p>{e.data.summary}</p>}
+              {meta.length > 0 && <p class="rev">{meta.join(" · ")}</p>}
+            </a>
+          </li>
+        );
+      })
     }
   </ul>
 </BaseLayout>
@@ -58,5 +70,31 @@ const fmt = (d?: Date) =>
     letter-spacing: 0.14em;
     text-transform: uppercase;
     margin-top: var(--space-3) !important;
+  }
+  /* The deep-work register: garnet, contemplative, never alarm —
+     magenta stays reserved for urgent/safety. A full wash, a garnet
+     border on every edge, and the tag; this card should read as a
+     different colour at a glance, not on inspection. */
+  .card.deep {
+    border-color: var(--garnet);
+    border-left-width: 3px;
+    background: linear-gradient(var(--garnet-wash), var(--garnet-wash)),
+      var(--void-2);
+  }
+  .card.deep:hover,
+  .card.deep:focus-within {
+    border-color: var(--garnet);
+    box-shadow: var(--glow-garnet);
+  }
+  .card.deep h2 {
+    color: var(--garnet);
+  }
+  .tone-tag {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--garnet);
+    margin-bottom: var(--space-2);
   }
 </style>

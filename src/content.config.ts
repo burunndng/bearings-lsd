@@ -47,8 +47,11 @@ const MOTIVATIONS = [
 const SHELVES = ["before", "between", "integration", "learn"] as const;
 
 /* tone drives subtle presentation, never a value ranking.
-   'ambiguity' cards ("that is enough") are first-class content. */
-const TONES = ["practical", "reflective", "risk", "ambiguity"] as const;
+   'ambiguity' cards ("that is enough") are first-class content.
+   'deep' marks the advanced multidisciplinary material (lenses,
+   doorways, ledgers) — a garnet register that says "slower, older
+   traditions inside", never "better". */
+const TONES = ["practical", "reflective", "risk", "ambiguity", "deep"] as const;
 
 /* OPTIONAL timing metadata. A card with no horizon is not lesser —
    it simply is not time-bound. Rendering groups by horizon only
@@ -124,9 +127,10 @@ const cards = defineCollection({
       substances: z.array(z.enum(SUBSTANCES)).default([]),
       /* renders an optional, always-skippable reflection input */
       optionalPrompt: z.boolean().default(false),
-      /* phase 2 hook: the reflection prompt this card will surface
-         inside Notes. Authored now, NOT rendered anywhere yet —
-         CardNote ignores it until the journal-prompts build-out. */
+      /* The reflection prompt this card surfaces inside its note
+         island. Rendered by CardNote when the card also sets
+         optionalPrompt: true — without that flag the island itself
+         does not render, so a promptText alone shows nothing. */
       promptText: z.string().max(400).optional(),
       /* short shelf summary; kept separate from body for card previews */
       summary: z.string().max(220).optional(),
@@ -210,6 +214,11 @@ const learn = defineCollection({
     .object({
       title: z.string(),
       summary: z.string().max(280).optional(),
+      /* Same tone vocabulary as cards. Currently only "deep" carries a
+         visual register (garnet, on the shelf and detail page); the
+         rest render identically. Declared here so the field exists
+         instead of being silently stripped as an unknown key. */
+      tone: z.enum(TONES).default("reflective"),
       order: z.number().default(0),
       /* uncertainty is stated as uncertainty; sources are required
          for factual claims. See content analysis (aging into harm). */

@@ -94,7 +94,13 @@ const SAFETY_LABELS: Record<string, string> = {
 
     {
       card.data.optionalPrompt && (
-        <CardNote client:load cardId={card.id} shelfLabel={shelfLabel} shelfPath={shelfPath} />
+        <CardNote
+          client:load
+          cardId={card.id}
+          shelfLabel={shelfLabel}
+          shelfPath={shelfPath}
+          promptText={card.data.promptText}
+        />
       )
     }
 

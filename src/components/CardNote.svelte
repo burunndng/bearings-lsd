@@ -17,8 +17,14 @@
     cardId: string;
     shelfPath: string;
     shelfLabel: string;
+    /* The card's authored reflection prompt, when it has one. Optional
+       on purpose: most cards have none, and a card without one still
+       gets the plain invitation below. A prompt narrows what you might
+       write about; it never adds an obligation to write, and Skip is
+       unchanged whether or not one is present. */
+    promptText?: string;
   }
-  const { cardId, shelfPath, shelfLabel }: Props = $props();
+  const { cardId, shelfPath, shelfLabel, promptText }: Props = $props();
 
   let body = $state("");
   let saved = $state(false);
@@ -92,8 +98,13 @@
 </script>
 
 <aside class="prompt">
+  {#if promptText}
+    <p class="authored">{promptText}</p>
+  {/if}
   <label for="reflect">
-    If you want to, you may note something here. There is no need to.
+    {promptText
+      ? "As much or as little of that as you want. There is no need to."
+      : "If you want to, you may note something here. There is no need to."}
   </label>
   <textarea
     id="reflect"
@@ -129,6 +140,17 @@
     display: block;
     color: var(--ink-soft);
     margin-bottom: var(--space-2);
+  }
+  /* The card's authored prompt reads as content, not as chrome — it was
+     written by an editor, so it carries the gold register that marks
+     authored material here, and the generic invitation below it drops
+     to the quieter label voice. */
+  .authored {
+    margin: 0 0 var(--space-3);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--gold);
+    color: var(--ink);
+    line-height: var(--leading-body);
   }
   textarea {
     width: 100%;
@@ -173,6 +195,17 @@
   .save:disabled {
     cursor: not-allowed;
     opacity: 0.55;
+  }
+  /* "Saved" is a state, not a label swap — the button keeps its shape
+     and its place in the row while the word changes, so the row never
+     reflows and the confirmation never competes with the control. */
+  .save {
+    transition:
+      border-color 160ms var(--ease-expand),
+      color 160ms var(--ease-expand);
+  }
+  .save:active:not(:disabled) {
+    transform: translateY(1px);
   }
   .skip {
     margin: 0;

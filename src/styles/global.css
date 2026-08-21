@@ -6,8 +6,8 @@
    register, magenta for thresholds. Depth from glow and line
    weight, not elevation.
 
-   Motion contract (photosafety): flicker capped at 3% amplitude,
-   scanline drift imperceptible, glitch event-triggered ≤200ms.
+   Motion contract (photosafety): no flicker, no glitch. Texture
+   layers are static; only graph geometry animates.
    Everything stills under prefers-reduced-motion or data-motion.
    ============================================================ */
 
@@ -64,11 +64,11 @@ body {
 [data-register="integration"] ::selection { background: var(--amber); }
 
 /* ============================================================
-   CRT TEXTURE LAYERS — scanlines, refresh band, grain
-   The soul of the terminal. All fixed, pointer-events: none.
+   TEXTURE LAYERS — scanlines, grain
+   Static, fixed, pointer-events: none. Surface tooth, not artifact.
    ============================================================ */
 
-/* Scanlines: repeating 3px gradient, the CRT screen */
+/* Scanlines: static 4px pitch, read as a fine tooth in the surface */
 body::before {
   content: "";
   position: fixed;
@@ -78,22 +78,13 @@ body::before {
   background: repeating-linear-gradient(
     to bottom,
     transparent 0px,
-    transparent 2px,
-    var(--scanline) 2px,
-    var(--scanline) 3px
+    transparent 3px,
+    var(--scanline) 3px,
+    var(--scanline) 4px
   );
-  animation: scanline-drift 8s linear infinite;
 }
-@keyframes scanline-drift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(3px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  body::before { animation: none; }
-}
-:root[data-motion="reduce"] body::before { animation: none; }
 
-/* Film grain — faint tactile noise above scanlines */
+/* Film grain — fine tactile tooth above the scanlines */
 body::after {
   content: "";
   position: fixed;
@@ -101,7 +92,7 @@ body::after {
   z-index: 91;
   pointer-events: none;
   opacity: var(--paper-grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .site-head, main, .safety-footer { position: relative; z-index: 2; }
@@ -147,7 +138,7 @@ h1 em, h2 em {
   font-style: normal;
   font-weight: 600;
   color: var(--amber);
-  text-shadow: 0 0 14px rgba(255, 200, 94, 0.45);
+  text-shadow: var(--glow-amber);
 }
 
 p { max-width: var(--measure); }
@@ -180,18 +171,19 @@ a:hover { text-decoration-thickness: 2px; }
   color: var(--dim);
 }
 
-/* Phosphor glow utilities */
-.glow-uv { text-shadow: 0 0 14px rgba(154, 107, 255, 0.55); }
-.glow-amber { text-shadow: 0 0 14px rgba(255, 200, 94, 0.45); }
-.glow-indigo { text-shadow: 0 0 12px rgba(168, 200, 255, 0.5); }
-.glow-magenta { text-shadow: 0 0 12px rgba(232, 56, 109, 0.5); }
+/* Phosphor glow utilities — tokenised, so paper stays flat */
+.glow-uv { text-shadow: var(--glow-uv); }
+.glow-amber { text-shadow: var(--glow-amber); }
+.glow-indigo { text-shadow: var(--glow-indigo); }
+.glow-magenta { text-shadow: var(--glow-magenta); }
 
 /* ============================================================
    FOCUS — visible, design-language matched
    ============================================================ */
 :focus-visible {
-  outline: 1px dashed var(--uv);
-  outline-offset: 4px;
+  outline: 2px solid var(--uv);
+  outline-offset: 3px;
+  border-radius: var(--radius);
 }
 [data-register="integration"] :focus-visible {
   outline-color: var(--amber);
@@ -345,60 +337,6 @@ button, .tap {
   color: var(--dim);
   font-size: var(--size-sm);
   margin-top: var(--space-2);
-}
-
-/* ============================================================
-   FLICKER — 3% amplitude, stepped. Photosafe.
-   ============================================================ */
-.flicker {
-  animation: crt-flicker 4.1s steps(1, end) infinite;
-}
-@keyframes crt-flicker {
-  0%, 100% { opacity: 1; }
-  7% { opacity: 0.985; }
-  8% { opacity: 1; }
-  31% { opacity: 0.975; }
-  32% { opacity: 1; }
-  63% { opacity: 0.985; }
-  64% { opacity: 1; }
-  88% { opacity: 0.97; }
-  89% { opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .flicker { animation: none; }
-}
-:root[data-motion="reduce"] .flicker { animation: none; }
-
-/* ============================================================
-   ANAGLYPH GLITCH — event-triggered only, ≤200ms
-   ============================================================ */
-.glitch-hover { position: relative; display: inline-block; }
-.glitch-hover::before,
-.glitch-hover::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-.glitch-hover:hover::before {
-  opacity: 0.85;
-  color: var(--ana-red);
-  transform: translate(-2px, -1px);
-  clip-path: inset(12% 0 58% 0);
-  animation: glitch-settle 180ms steps(2, end) forwards;
-}
-.glitch-hover:hover::after {
-  opacity: 0.85;
-  color: var(--ana-cyan);
-  transform: translate(2px, 1px);
-  clip-path: inset(56% 0 8% 0);
-  animation: glitch-settle 180ms steps(2, end) forwards;
-}
-@keyframes glitch-settle {
-  0% { clip-path: inset(12% 0 58% 0); }
-  50% { clip-path: inset(40% 0 30% 0); }
-  100% { clip-path: inset(0 0 0 0); opacity: 0; }
 }
 
 /* ============================================================

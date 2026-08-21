@@ -42,6 +42,48 @@ choice and personal reflection around psychedelic preparation and
 integration — and around other experiences that are intense in their own
 way. Nothing is required and nothing is owed.**
 
+## Technical orientation
+
+**Stack.** Astro 7, static output, no server, no third-party scripts.
+Svelte 5 islands for interactivity. TypeScript checked via `astro check`.
+Bun runs the scripts and the tests (`bun test`, colocated `*.test.ts` in
+`src/lib/` and `scripts/`). PWA via `@vite-pwa/astro`: safety content is
+cache-first (offline is a v1 requirement), `/referrals` is network-first.
+
+**Local-first.** Every persisted thing goes through `src/lib/storage.ts`,
+the only access path to the device stores. New persisted keys must be added
+to the `IDB_KEYS` / `LS_KEYS` registries there, or `wipe()` will not clear
+them and the privacy promise breaks.
+
+**Layout.** `src/pages/` — routes: shelves (`before`, `between`,
+`integration`, `learn`, dynamic `card/`), plus `safety`, `referrals.json`,
+`resources`, `notes`, `sessions`, `strategy`, `settings`, `sheet`, `404`.
+`src/content/` — four collections (`cards`, `safety`, `learn`, `resources`);
+schemas and their policy comments live in `src/content.config.ts`.
+`src/lib/` — `storage`, `shelves`, `sessions`, `referrals`, `dates`,
+`strategist`. `src/components/` — Svelte islands. One layout:
+`src/layouts/BaseLayout.astro` (nav list lives there). `src/styles/` —
+tokens/fonts/global/print. `scripts/` — hand-written lint and gate tools.
+`docs/superpowers/{plans,specs}` — dated working documents.
+
+**CSP.** Strict, hash-based. Inline `<script is:inline>` blocks (theme
+no-flash in BaseLayout, NightField canvas) are hashed manually in
+`astro.config.mjs`; if you edit either one, recompute with
+`bun run csp:hashes` — `scripts/check-csp.js` fails the release gate on
+drift from `public/_headers`.
+
+**Commands.** `bun dev` / `build` / `preview`. `bun run lint` (phrases,
+links, order — must stay green on every commit). `bun run check` (astro
+check). `bun test`. `bun run lint:release` is the full release gate
+(lint + review + coverage + check + tests + build + CSP); the review gate
+inside it stays red until clinician sign-off exists, by design.
+
+**Invariants, restated for convenience.** Never add cards to the `between`
+shelf (zero-card cap). Elevated-risk content requires `reviewedBy` +
+`reviewedOn` or `draft: true`. Voice rules apply to all user-facing copy,
+including `aria-label` and `placeholder` attributes. Domain words have fixed
+meanings in `CONTEXT.md` — reuse them before inventing new ones.
+
 ## Working rules for agents
 
 - Measure progress against the product's own gates, not against a hunch:

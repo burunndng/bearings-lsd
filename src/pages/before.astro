@@ -23,6 +23,10 @@ const cards = (await getCollection("cards")).filter(
       Logistics, support, boundaries, expectations, safety. Pick only what
       matters to you. Nothing here is required.
     </p>
+    <p class="sheet-link">
+      <a href="/sheet/preparation">Fill out the preparation worksheet</a> ·{" "}
+      <a href="/sheet">or the day-of safety Sheet</a>
+    </p>
   </section>
 
   <ShelfFilter client:load />
@@ -35,6 +39,16 @@ const cards = (await getCollection("cards")).filter(
     margin-top: var(--space-5);
   }
   .lede {
+    margin-bottom: var(--space-3);
+  }
+  .sheet-link {
     margin-bottom: var(--space-5);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .sheet-link a {
+    color: var(--gold);
   }
 </style>
