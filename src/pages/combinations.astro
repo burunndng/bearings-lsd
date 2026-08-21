@@ -1,0 +1,78 @@
+---
+/* ============================================================
+   Bearings — /combinations (drug-combination reference)
+
+   A read-only reference, not a shelf and not a card: no
+   motivations, no horizon, no reflection prompt. Someone arrives
+   here with a specific question and leaves once it is answered.
+
+   Why it is a page of its own rather than card content: this is
+   lookup material, and lookup material that lives inside prose is
+   material nobody can find at the moment they need it.
+
+   It is deliberately NOT on the `between` shelf. PRODUCT_BOUNDARY.md
+   caps that shelf at zero authored cards, and this page does not
+   change that decision — a static reference table rendered the same
+   for everyone is a different kind of artifact from advice authored
+   for someone mid-experience.
+
+   It states what the data says and stops there. It cannot screen,
+   approve, or clear anyone for anything.
+
+   Nothing here touches storage: no selection is persisted, no
+   analytics, no network. The dataset ships with the app.
+   ============================================================ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CombinationLookup from "../components/CombinationLookup.svelte";
+---
+
+<BaseLayout
+  title="Combinations — Bearings"
+  description="A plain reference for what is known about combining two substances: a status, what that status means, and any note attached to the pairing."
+  section="combinations"
+>
+  <section class="reading">
+    <p class="kicker">Reference</p>
+    <h1>Combinations</h1>
+    <p class="lede">
+      A plain lookup for two substances at a time: the status the data gives
+      that pairing, what that status means, and any note attached to it.
+    </p>
+    <p>
+      It reports what the dataset says and nothing beyond that. It cannot
+      account for dose, timing, what else is in a body, or an individual
+      medical picture — a pairing listed as lower risk is not a pairing
+      cleared for you, and an unlisted pairing means the data is silent, not
+      that there is nothing to know.
+    </p>
+    <p>
+      If a medication is part of the picture, that is a question for a
+      prescriber or pharmacist who can see your whole history. The
+      <a href="/safety">safety page</a> has the routes.
+    </p>
+    <p class="detail">
+      This page keeps nothing. Your choices are not saved, not sent anywhere,
+      and are gone when you close the tab.
+    </p>
+  </section>
+
+  <div class="tool">
+    <CombinationLookup client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-5);
+  }
+  .tool {
+    margin-top: var(--space-6);
+  }
+  .detail {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    margin-top: var(--space-4);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--rule);
+  }
+</style>

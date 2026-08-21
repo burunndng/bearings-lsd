@@ -1,0 +1,44 @@
+[
+  {
+    "id": "dangerous",
+    "label": "Dangerous",
+    "glyph": "✕",
+    "definition": "Considered extremely high risk. Reactions can be unpredictable and severe. Best avoided entirely."
+  },
+  {
+    "id": "unsafe",
+    "label": "Unsafe",
+    "glyph": "!",
+    "definition": "Carries a considerable risk of physical harm. Worth avoiding where you can."
+  },
+  {
+    "id": "caution",
+    "label": "Caution",
+    "glyph": "△",
+    "definition": "Not usually physically harmful, but effects can be uncomfortable or hard to predict. Care and a lower dose help."
+  },
+  {
+    "id": "low-risk-decrease",
+    "label": "Low risk & decrease",
+    "glyph": "↘",
+    "definition": "Effects tend to subtract from each other. Unlikely to add risk beyond what each carries alone."
+  },
+  {
+    "id": "low-risk-no-synergy",
+    "label": "Low risk & no synergy",
+    "glyph": "→",
+    "definition": "Effects tend to add together. Unlikely to add risk beyond what each carries alone."
+  },
+  {
+    "id": "low-risk-synergy",
+    "label": "Low risk & synergy",
+    "glyph": "↗",
+    "definition": "Effects tend to amplify each other. Low risk when approached carefully; reading up first is worthwhile."
+  },
+  {
+    "id": "unknown",
+    "label": "Unknown",
+    "glyph": "?",
+    "definition": "Not enough reliable information to say. Worth treating as unpredictable."
+  }
+]

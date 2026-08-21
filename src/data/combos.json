@@ -1,0 +1,119 @@
+{
+  "_note": "Combination reference for /combinations. Statuses follow the TripSit taxonomy and its published community chart; wording of definitions is Bearings' own. Snapshot 2026-08-21. Unlisted pairs resolve to 'unknown' by design: silence in this file means the data is silent, not that a pairing is safe.",
+  "substances": [
+    { "id": "alcohol", "name": "Alcohol", "aliases": ["booze", "drinking"] },
+    { "id": "amphetamine", "name": "Amphetamine", "aliases": ["speed", "adderall"] },
+    { "id": "benzos", "name": "Benzodiazepines", "aliases": ["valium", "xanax", "benzos", "trip killer"] },
+    { "id": "caffeine", "name": "Caffeine", "aliases": ["coffee", "energy drinks"] },
+    { "id": "cannabis", "name": "Cannabis", "aliases": ["weed", "marijuana", "thc"] },
+    { "id": "ketamine", "name": "Ketamine", "aliases": ["k", "special k"] },
+    { "id": "lsd", "name": "LSD", "aliases": ["acid", "lucy"] },
+    { "id": "lithium", "name": "Lithium", "aliases": [] },
+    { "id": "maois", "name": "MAOIs (incl. ayahuasca)", "aliases": ["maoi", "ayahuasca", "harmalas", "moclobemide"] },
+    { "id": "mdma", "name": "MDMA", "aliases": ["ecstasy", "molly", "mandy"] },
+    { "id": "psilocybin", "name": "Psilocybin mushrooms", "aliases": ["shrooms", "magic mushrooms", "truffles"] },
+    { "id": "ssris", "name": "SSRI antidepressants", "aliases": ["ssri", "antidepressants", "sertraline", "fluoxetine", "escitalopram"] },
+    { "id": "tramadol", "name": "Tramadol", "aliases": ["tram"] }
+  ],
+  "combos": {
+    "alcohol": {
+      "amphetamine": { "status": "caution", "note": "Alcohol masks how stimulated you are; people drink past their limit without noticing." },
+      "benzos": { "status": "dangerous", "note": "Respiratory depression — this combination is behind most downer overdoses." },
+      "caffeine": { "status": "caution", "note": "Caffeine masks drunkenness rather than reducing it." },
+      "cannabis": { "status": "low-risk-no-synergy" },
+      "ketamine": { "status": "caution", "note": "Nausea, staggering, and memory gaps stack harder than either alone." },
+      "lsd": { "status": "low-risk-no-synergy" },
+      "lithium": { "status": "caution", "note": "Dehydration and electrolyte shifts affect lithium levels." },
+      "maois": { "status": "caution", "note": "Blood-pressure concerns mainly with older, non-selective MAOIs." },
+      "mdma": { "status": "caution", "note": "Confuses hydration: alcohol dehydrates while MDMA makes overheating more likely." },
+      "psilocybin": { "status": "low-risk-no-synergy" },
+      "ssris": { "status": "low-risk-no-synergy" },
+      "tramadol": { "status": "unsafe", "note": "Sedation stacks; both lower the seizure threshold." }
+    },
+    "amphetamine": {
+      "benzos": { "status": "low-risk-no-synergy" },
+      "caffeine": { "status": "caution", "note": "Added cardiovascular strain and jaw-clench anxiety." },
+      "cannabis": { "status": "caution", "note": "Heart rate adds; paranoia can too." },
+      "ketamine": { "status": "caution", "note": "Blood pressure and heart rate climb together." },
+      "lsd": { "status": "caution", "note": "Added stimulation can tip an experience into restlessness." },
+      "lithium": { "status": "caution", "note": "Limited data." },
+      "maois": { "status": "dangerous", "note": "Hypertensive crisis risk." },
+      "mdma": { "status": "caution", "note": "Temperature and cardiovascular load stack; most harm reports involve heavy polyuse." },
+      "psilocybin": { "status": "caution" },
+      "ssris": { "status": "low-risk-no-synergy" },
+      "tramadol": { "status": "caution" }
+    },
+    "benzos": {
+      "caffeine": { "status": "low-risk-no-synergy" },
+      "cannabis": { "status": "low-risk-no-synergy", "note": "Heavy sedation; neither cancels the other." },
+      "ketamine": { "status": "low-risk-decrease", "note": "Blunts dissociation — clinics often withhold them for this reason." },
+      "lsd": { "status": "low-risk-decrease", "note": "The classic trip killer: reduces intensity rather than ending anything." },
+      "lithium": { "status": "low-risk-no-synergy" },
+      "maois": { "status": "low-risk-no-synergy" },
+      "mdma": { "status": "low-risk-no-synergy", "note": "Useful for unwanted stimulation after the fact; take only if actually needed." },
+      "psilocybin": { "status": "low-risk-decrease" },
+      "ssris": { "status": "low-risk-no-synergy" },
+      "tramadol": { "status": "unsafe", "note": "Sedation and seizure risk stack." }
+    },
+    "caffeine": {
+      "cannabis": { "status": "low-risk-no-synergy" },
+      "ketamine": { "status": "low-risk-no-synergy" },
+      "lsd": { "status": "caution", "note": "Jitter edge on top of an already-aroused nervous system." },
+      "lithium": { "status": "low-risk-no-synergy" },
+      "maois": { "status": "caution", "note": "Pressor response with non-selective MAOIs." },
+      "mdma": { "status": "caution", "note": "Temperature and strain add." },
+      "psilocybin": { "status": "caution" },
+      "ssris": { "status": "low-risk-no-synergy" },
+      "tramadol": { "status": "caution", "note": "Both nudge the seizure threshold downward." }
+    },
+    "cannabis": {
+      "ketamine": { "status": "caution", "note": "Nausea and ataxia stack." },
+      "lsd": { "status": "caution", "note": "Late-trip amplification is the common report — fine until suddenly not." },
+      "mdma": { "status": "caution", "note": "Can soften the come-up or amplify anxiety; direction is unpredictable." },
+      "psilocybin": { "status": "caution", "note": "Same amplification story as LSD; dose the mushroom, not the joint." },
+      "ssris": { "status": "low-risk-no-synergy" },
+      "tramadol": { "status": "low-risk-no-synergy" }
+    },
+    "ketamine": {
+      "lsd": { "status": "low-risk-synergy" },
+      "lithium": { "status": "caution", "note": "Limited data." },
+      "maois": { "status": "caution", "note": "Limited data; blood pressure warrants care." },
+      "mdma": { "status": "caution", "note": "Common pairing; the ketamine lands differently under MDMA's threshold shift." },
+      "psilocybin": { "status": "low-risk-synergy" },
+      "ssris": { "status": "low-risk-no-synergy", "note": "Routine in clinical ketamine treatment." },
+      "tramadol": { "status": "unsafe", "note": "Seizure threshold." }
+    },
+    "lsd": {
+      "lithium": { "status": "unsafe", "note": "Case literature links lithium with seizures alongside classic psychedelics." },
+      "maois": { "status": "caution", "note": "Some potentiation reported; less characterised than psilocybin." },
+      "mdma": { "status": "low-risk-synergy", "note": "A common pairing ('flipping'). The timelines stack — plan a long day." },
+      "psilocybin": { "status": "low-risk-synergy" },
+      "ssris": { "status": "low-risk-decrease", "note": "Often blunted, sometimes to nearly nothing. Do not redose to chase it." },
+      "tramadol": { "status": "unsafe", "note": "Tramadol lowers the seizure threshold across the board." }
+    },
+    "lithium": {
+      "maois": { "status": "low-risk-no-synergy" },
+      "mdma": { "status": "dangerous", "note": "Case literature plus hydration and electrolyte complications — a bad overlap." },
+      "psilocybin": { "status": "unsafe", "note": "Same seizure concern as LSD." },
+      "ssris": { "status": "low-risk-no-synergy", "note": "Co-prescribed routinely in psychiatry." }
+    },
+    "maois": {
+      "mdma": { "status": "dangerous", "note": "Serotonin syndrome risk." },
+      "psilocybin": { "status": "caution", "note": "Strong potentiation — this is effectively how ayahuasca works. Dose accordingly or not at all." },
+      "ssris": { "status": "dangerous", "note": "Serotonin syndrome; switching between these medications requires a supervised washout." },
+      "tramadol": { "status": "dangerous", "note": "Serotonin syndrome." }
+    },
+    "mdma": {
+      "psilocybin": { "status": "low-risk-synergy", "note": "'Hippie flipping.' Which one leads shapes which experience you get." },
+      "ssris": { "status": "low-risk-decrease", "note": "Blunted, sometimes to nothing. Redosing to compensate is where people get hurt." },
+      "tramadol": { "status": "dangerous", "note": "Serotonin syndrome plus lowered seizure threshold." }
+    },
+    "psilocybin": {
+      "ssris": { "status": "low-risk-decrease" },
+      "tramadol": { "status": "unsafe" }
+    },
+    "ssris": {
+      "tramadol": { "status": "unsafe", "note": "Serotonin syndrome and lowered seizure threshold are well documented." }
+    }
+  }
+}

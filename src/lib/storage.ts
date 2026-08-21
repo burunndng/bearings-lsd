@@ -24,6 +24,7 @@ export const IDB_KEYS = [
   "bearings-anchor",
   "bearings-sessions",
   "bearings-ledger",
+  "bearings-readings",
 ] as const;
 export const LS_KEYS = [
   "bearings-theme",
@@ -125,6 +126,25 @@ export interface AnchorData {
   readings: Reading[];
 }
 
+/** One section of a strategy reading. The five sections (audit, tension,
+    lens, check, return) are always present in the same order — this is
+    stable layout, not dynamic content. */
+export interface StrategistSection {
+  id: "audit" | "tension" | "lens" | "check" | "return";
+  title: string;
+  body: string;
+  quiet: boolean;
+}
+
+/** One strategy reading in `bearings-readings`. A deterministic,
+    on-device reflection: the user's own words, fixed questions, and
+    things to check on — never interpreted, never generated. */
+export interface StrategistReading {
+  id: string;
+  createdAt: string;
+  sections: StrategistSection[];
+}
+
 /* ============================================================
    Bearings — Store access (the deep module)
 
@@ -177,6 +197,7 @@ type KeyShape = {
   "bearings-anchor": AnchorData;
   "bearings-sessions": Session[];
   "bearings-ledger": LedgerEntry[];
+  "bearings-readings": StrategistReading[];
   "bearings-theme": string;
   "bearings-motion": string;
   "bearings-reminders": string;

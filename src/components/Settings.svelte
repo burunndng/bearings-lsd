@@ -10,6 +10,7 @@
     type LedgerEntry,
     type Note,
     type Session,
+    type StrategistReading,
   } from "../lib/storage.ts";
   import { INTERVIEW_PROMPTS } from "../lib/sessions.ts";
 
@@ -103,6 +104,7 @@
     anchor: AnchorData | undefined,
     sessions: Session[],
     ledger: LedgerEntry[],
+    readingsLog: StrategistReading[],
   ): string {
     const out: string[] = [];
 
@@ -245,6 +247,31 @@
       out.push("");
     }
 
+    if (readingsLog.length > 0) {
+      out.push("=".repeat(64));
+      out.push("");
+      out.push(`STRATEGY READINGS (${readingsLog.length})`);
+      out.push("");
+      out.push("A plain reading: your words, fixed questions, things to");
+      out.push("check on. Nothing here is generated or interpreted.");
+      out.push("");
+      const ordered = [...readingsLog].sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+      for (const reading of ordered) {
+        out.push("-".repeat(64));
+        out.push(`${dateLabel(reading.createdAt)}  ·  ${ageLabel(reading.createdAt)}`);
+        out.push("");
+        for (const section of reading.sections) {
+          out.push(section.title);
+          out.push("");
+          out.push(section.body);
+          out.push("");
+        }
+      }
+    }
+
     out.push("=".repeat(64));
     out.push("");
     out.push(
@@ -264,6 +291,7 @@
       const anchor = await load("bearings-anchor");
       const sessions = (await load("bearings-sessions")) ?? [];
       const ledger = (await load("bearings-ledger")) ?? [];
+      const readingsLog = (await load("bearings-readings")) ?? [];
 
       /* Nothing to write is not an error, and an empty file would be a
          worse answer than saying so plainly. Every store is checked:
@@ -273,14 +301,15 @@
         notes.length === 0 &&
         !anchor?.question &&
         sessions.length === 0 &&
-        ledger.length === 0
+        ledger.length === 0 &&
+        readingsLog.length === 0
       ) {
         message =
           "There is nothing saved on this device yet, so there is nothing to copy.";
         return;
       }
 
-      const text = buildExport(notes, anchor, sessions, ledger);
+      const text = buildExport(notes, anchor, sessions, ledger, readingsLog);
       const stamp = new Date().toISOString().slice(0, 10);
       const url = URL.createObjectURL(
         new Blob([text], { type: "text/plain;charset=utf-8" }),
@@ -306,6 +335,10 @@
       if (ledger.length)
         parts.push(
           `${ledger.length} decision${ledger.length === 1 ? "" : "s"}`,
+        );
+      if (readingsLog.length)
+        parts.push(
+          `${readingsLog.length} reading${readingsLog.length === 1 ? "" : "s"}`,
         );
       const summary = parts.length ? parts.join(", ") : "your entries";
       message = `A copy of ${summary} was handed to this browser to save.`;
@@ -372,7 +405,7 @@
 
     <section class="data" aria-labelledby="data-heading">
       <h2 id="data-heading">Data on this device</h2>
-      <p>Everything saved here — notes, held questions, decisions — stays in this browser unless you delete it. Bearings does not send it to a server.</p>
+      <p>Everything saved here — notes, held questions, decisions, strategy readings — stays in this browser unless you delete it. Bearings does not send it to a server.</p>
 
       <div class="copy-block">
         <button type="button" class="copy" disabled={exporting} onclick={downloadCopy}>

@@ -1,0 +1,68 @@
+---
+/* ============================================================
+   Bearings — /strategy (strategist reflection)
+
+   Deliberately its own entry point and not linked from the shelves.
+   This is a working page for when an experience or a stretch of days
+   has left you pulled two ways — you answer what you want to, choose a
+   lens, and get a plain reading: what you wrote, back in your own
+   words, with a few fixed questions and things you might check on.
+
+   It never interprets what happened. Nothing is owed. There is no
+   version of using this page correctly.
+
+   Like /sessions, it runs entirely on this device. Nothing typed here
+   is sent anywhere, and it is not discoverable from the main shelves —
+   it is in the nav for those who seek it out.
+
+   Not linked from shelves for the same reason as sessions: the default
+   path should remain light. This is for the smaller case of someone
+   doing repeated, deliberate, solo work.
+   ============================================================ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StrategyReflection from "../components/StrategyReflection.svelte";
+---
+
+<BaseLayout
+  title="Strategy — Bearings"
+  description="An optional working page for when an experience or a stretch of days has left you pulled two ways — you answer what you want to, choose a lens, and get a plain reading."
+  section="strategy"
+>
+  <section class="reading">
+    <p class="kicker">On this device only</p>
+    <h1>Strategy</h1>
+    <p class="lede">
+      An optional working page for when an experience or a stretch of days
+      has left you pulled two ways. You answer what you want to, choose a
+      lens, and get a plain reading: what you wrote, back in your own words,
+      with a few fixed questions and things you might check on.
+    </p>
+    <p>
+      It never interprets what happened. Nothing is owed, and there is no
+      version of using this page correctly.
+    </p>
+    <p>
+      It runs entirely on this device. Nothing you type is sent anywhere.
+    </p>
+    <p class="detail">
+      Everything below is stored unencrypted in this browser, like the rest of
+      your notes. Anyone with access to this device and an unlocked browser can
+      read it. Settings has a copy-out and a delete-everything.
+    </p>
+  </section>
+
+  <StrategyReflection client:load />
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-5);
+  }
+  .detail {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    margin-top: var(--space-4);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--rule);
+  }
+</style>
