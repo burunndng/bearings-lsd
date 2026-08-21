@@ -8,6 +8,13 @@ optionalPrompt: true
 summary: "Some experiences leave a loose thread. There is no deadline to tie it off."
 order: 20
 related: ["when-its-not-settling"]
+sources:
+  - cite: "Evans, J. et al. (2023). Extended difficulties following the use of psychedelic drugs: A mixed methods study. PLOS ONE."
+    url: "https://doi.org/10.1371/journal.pone.0293349"
+    year: 2023
+  - cite: "Robinson, O. C. et al. (2024). Coming back together: coping and support strategies after extended difficulties. Frontiers in Psychology."
+    url: "https://doi.org/10.3389/fpsyg.2024.1369715"
+    year: 2024
 ---
 
 Some experiences leave a loose thread — a feeling, an image, or a question

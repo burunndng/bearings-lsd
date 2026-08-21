@@ -8,6 +8,13 @@ motivations: ["support"]
 tone: "practical"
 order: 25
 draft: true
+sources:
+  - cite: "Johnson, M., Richards, W., & Griffiths, R. (2008). Human hallucinogen research: guidelines for safety. Journal of Psychopharmacology."
+    url: "https://doi.org/10.1177/0269881108093587"
+    year: 2008
+  - cite: "Carbonaro, T. et al. (2016). Survey study of challenging experiences after ingesting psilocybin mushrooms. Journal of Psychopharmacology."
+    url: "https://doi.org/10.1177/0269881116662634"
+    year: 2016
 ---
 
 Most of this is waiting. Six hours is a long time to be attentive and
@@ -42,11 +49,13 @@ that it will not last — is more use than reassurance about what they are
 experiencing, which you cannot see.
 
 Distress is not the same as emergency. Crying, terror, saying they are
-dying, needing to move around — these are common and pass. Chest pain,
-a seizure, a very high temperature, someone acting on a plan to harm
-themselves or another person, or losing consciousness are different, and
-the answer is medical help. [The signs worth acting on](/safety) sets out
-where that line is.
+dying, needing to move around — these are common and pass, and they do
+not by themselves mean anything has gone wrong.
+
+The line between distress and something needing medical help is set out
+on [the signs worth acting on](/safety), which is reviewed by a
+clinician and kept current. It is worth knowing where that page is before
+you need it, the same way you would know where the first-aid kit is.
 
 Eat something. Sit down. If there are two of you, take turns. Whether you
 were any use tends to depend less on what you said than on whether you

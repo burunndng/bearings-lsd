@@ -49,3 +49,8 @@ You may want to consider:
 If anything about your situation makes solo use feel like more risk than
 you want to hold, pausing costs nothing. See [Consider pausing or
 reconsidering](/safety) for what else is worth weighing.
+
+If you are coming to the day with something specific to work on — a
+question, a pattern, something that has been asking for attention — the
+[session focus worksheet](/sheet/session-focus) is a place to decide in
+advance how you want to meet it, written while thinking is still clear.

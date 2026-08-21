@@ -4,14 +4,24 @@ shelf: before
 motivations: ["close", "support", "difficult", "unsure"]
 tone: practical
 horizon: weeks-before
-summary: "Company shapes a psychedelic experience as much as anything you take. A few plain questions, whether you'll have people around or not."
+summary: "Company shapes a psychedelic experience. A few plain questions, whether you'll have people around or not."
 related: ["doing-this-alone"]
 order: 10
+sources:
+  - cite: "Hartogsohn, I. (2016). Set and setting, psychedelics and the placebo response. Journal of Psychopharmacology."
+    url: "https://doi.org/10.1177/0269881116677852"
+    year: 2016
+  - cite: "Haijen, E. et al. (2018). Predicting Responses to Psychedelics: A Prospective Study. Frontiers in Pharmacology."
+    url: "https://doi.org/10.3389/fphar.2018.00897"
+    year: 2018
+  - cite: "Johnson, M., Richards, W., & Griffiths, R. (2008). Human hallucinogen research: guidelines for safety. Journal of Psychopharmacology."
+    url: "https://doi.org/10.1177/0269881108093587"
+    year: 2008
 ---
 
-Company shapes a psychedelic experience as much as anything you take. If you will have
-people around, it is worth thinking through, ahead of time, who will
-actually be there.
+Company shapes a psychedelic experience, and it is worth treating the people
+around you as part of the setup. If you will have people around, it is worth
+thinking through, ahead of time, who will actually be there.
 
 If you expect other people around, you may want to consider:
 

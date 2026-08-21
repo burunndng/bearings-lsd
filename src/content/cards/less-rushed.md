@@ -4,8 +4,15 @@ shelf: before
 motivations: ["curious", "play", "awe", "difficult", "unsure"]
 tone: practical
 horizon: days-before
-summary: "Time pressure changes a psychedelic experience. A look at what is driving the clock."
+summary: "Time pressure tends to shape a psychedelic experience. A look at what is driving the clock."
 order: 20
+sources:
+  - cite: "Hartogsohn, I. (2016). Set and setting, psychedelics and the placebo response. Journal of Psychopharmacology."
+    url: "https://doi.org/10.1177/0269881116677852"
+    year: 2016
+  - cite: "Haijen, E. et al. (2018). Predicting Responses to Psychedelics: A Prospective Study. Frontiers in Pharmacology."
+    url: "https://doi.org/10.3389/fphar.2018.00897"
+    year: 2018
 ---
 
 Time pressure tends to shape a psychedelic experience, and people often notice it
