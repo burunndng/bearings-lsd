@@ -11,6 +11,7 @@
    ============================================================ */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ShelfList from "../components/ShelfList.astro";
+import SheetConstellation from "../components/SheetConstellation.astro";
 import { getCollection } from "astro:content";
 /* No ShelfFilter here: `between` is frozen as a zero-card triage
    surface (locked decision). Filtering UI for a shelf that never
@@ -39,6 +40,8 @@ const cards = (await getCollection("cards")).filter(
       emergency number.
     </p>
   </aside>
+
+  <SheetConstellation />
 
   <ShelfList cards={cards} shelf="between" />
 </BaseLayout>

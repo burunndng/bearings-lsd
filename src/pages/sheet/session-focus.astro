@@ -1,0 +1,52 @@
+---
+/* ============================================================
+   Bearings — /sheet/session-focus
+
+   For a session someone is coming to with something specific to
+   address, alone: the stance they want to take toward it, their
+   exits if it gets heavy, and their anchors back. The most
+   technical of the three sheets — its framing names the actual
+   constructs (willingness, felt sense, window of tolerance,
+   emotional processing) so a reader can follow any of them up.
+
+   Content is defined in lib/worksheets.ts; this page is only the
+   route. Nothing persisted. Print or save-as-PDF is the artifact.
+   ============================================================ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Worksheet from "../../components/Worksheet.svelte";
+import { SESSION_FOCUS_WORKSHEET } from "../../lib/worksheets.ts";
+---
+
+<BaseLayout title="Session focus worksheet — Bearings" section="before">
+  <div class="sheet-page">
+    <section class="reading">
+      <p class="kicker">{SESSION_FOCUS_WORKSHEET.kicker}</p>
+      <h1>{SESSION_FOCUS_WORKSHEET.title}</h1>
+      <p class="lede">{SESSION_FOCUS_WORKSHEET.lede}</p>
+      <p class="hub-link no-print">
+        Part of <a href="/sheet">the Sheets</a> · logistics for the day live on{" "}
+        <a href="/sheet/preparation">the preparation worksheet</a>
+      </p>
+    </section>
+    <Worksheet worksheet={SESSION_FOCUS_WORKSHEET} client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-5);
+  }
+  .lede {
+    margin-bottom: var(--space-4);
+  }
+  .hub-link {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .hub-link a {
+    color: var(--gold);
+  }
+</style>

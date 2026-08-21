@@ -94,4 +94,35 @@
   .sheet-page {
     max-width: 100%;
   }
+
+  /* --- Guided worksheets (/sheet/preparation, /sheet/integration) ---
+     These run longer than one page by design; the job here is clean
+     page breaks: a section never splits mid-block, an input keeps
+     its ruled line so handwriting has somewhere to go on paper even
+     when the form was filled on screen, and the safety strip never
+     straddles a boundary. */
+  .worksheet .block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .worksheet .pair-row {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .worksheet input[type="text"],
+  .worksheet textarea {
+    border-color: #999999 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+  .worksheet .intro {
+    color: #333333 !important;
+  }
+  .worksheet .sources,
+  .worksheet .source {
+    color: #555555 !important;
+  }
+  .worksheet .footnote {
+    color: #555555 !important;
+  }
 }

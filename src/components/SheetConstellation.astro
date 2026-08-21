@@ -1,0 +1,161 @@
+---
+/* ============================================================
+   Bearings — SheetConstellation (on /between)
+
+   A quiet visual pointer back to the planning sheets, drawn as a
+   three-star constellation. Deliberately NOT card content: the
+   `between` shelf is capped at zero authored cards by a locked
+   decision (PRODUCT_BOUNDARY.md) — writing advice for someone
+   mid-experience is a different kind of artifact. Navigation to
+   tools that already exist is not advice; it is a reminder that
+   the planning a person made earlier is still where they left it.
+
+   Pure SVG + CSS: no hydration, no JS, no storage. Works before
+   any island loads and with scripts disabled entirely. Drift
+   animation is decorative only and switches off under both the
+   system preference and the in-app motion toggle.
+   ============================================================ */
+---
+
+<div class="constellation">
+  <div class="c-copy">
+    <p class="c-head">Made plans earlier?</p>
+    <p class="c-sub">
+      They are where you left them. None of it expires, and nothing here
+      needs doing right now.
+    </p>
+  </div>
+
+  <svg
+    viewBox="0 0 640 210"
+    class="sky"
+    role="img"
+    aria-label="Three linked points: the preparation worksheet, the session focus worksheet, and the integration worksheet"
+  >
+    <line x1="122" y1="118" x2="318" y2="66" class="thread"></line>
+    <line x1="322" y1="66" x2="518" y2="126" class="thread"></line>
+
+    <a href="/sheet/preparation" class="node n1">
+      <circle cx="120" cy="120" r="20" class="halo"></circle>
+      <circle cx="120" cy="120" r="7" class="star"></circle>
+      <path d="M120 104 v-8 M120 136 v8 M104 120 h-8 M136 120 h8" class="spark"></path>
+      <text x="120" y="162">Preparation</text>
+    </a>
+
+    <a href="/sheet/session-focus" class="node n2 deep">
+      <circle cx="320" cy="64" r="20" class="halo"></circle>
+      <circle cx="320" cy="64" r="7" class="star"></circle>
+      <path d="M320 48 v-8 M320 80 v8 M304 64 h-8 M336 64 h8" class="spark"></path>
+      <text x="320" y="106">Session focus</text>
+    </a>
+
+    <a href="/sheet/integration" class="node n3">
+      <circle cx="520" cy="128" r="20" class="halo"></circle>
+      <circle cx="520" cy="128" r="7" class="star"></circle>
+      <path d="M520 112 v-8 M520 144 v8 M504 128 h-8 M536 128 h8" class="spark"></path>
+      <text x="520" y="170">Integration</text>
+    </a>
+  </svg>
+</div>
+
+<style>
+  .constellation {
+    max-width: var(--measure);
+    margin-bottom: var(--space-5);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+  .c-head {
+    font-family: var(--font-display);
+    font-size: var(--size-lg);
+    margin: 0 0 var(--space-1);
+  }
+  .c-sub {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    margin: 0 0 var(--space-2);
+  }
+  .sky {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .thread {
+    stroke: var(--grid-line);
+    stroke-width: 1;
+    stroke-dasharray: 2 5;
+    fill: none;
+  }
+  .node {
+    cursor: pointer;
+    outline-offset: 4px;
+  }
+  .star {
+    fill: var(--gold);
+    transition: fill 0.25s ease;
+  }
+  .spark {
+    stroke: var(--gold);
+    stroke-width: 1;
+    opacity: 0.55;
+    transition: opacity 0.25s ease;
+  }
+  .halo {
+    fill: transparent;
+    stroke: transparent;
+    transition: all 0.25s ease;
+  }
+  .node text {
+    fill: var(--ink-soft);
+    font-family: var(--font-meta);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-anchor: middle;
+    transition: fill 0.25s ease;
+  }
+  /* Deep-work node carries the garnet register, matching /learn. */
+  .node.deep .star {
+    fill: var(--garnet);
+  }
+  .node.deep .spark {
+    stroke: var(--garnet);
+  }
+  .node:hover .star,
+  .node:focus-visible .star {
+    fill: var(--gold-bright);
+  }
+  .node.deep:hover .star,
+  .node.deep:focus-visible .star {
+    fill: var(--garnet);
+    filter: drop-shadow(0 0 6px var(--garnet));
+  }
+  .node:hover .halo,
+  .node:focus-visible .halo {
+    stroke: var(--rule);
+    fill: var(--garnet-wash);
+  }
+  .node:hover text,
+  .node:focus-visible text {
+    fill: var(--gold-bright);
+  }
+
+  /* Decorative drift, three phases so the constellation breathes
+     rather than bounces. Off whenever anyone says slow down. */
+  .n1 { animation: drift 11s ease-in-out infinite alternate; }
+  .n2 { animation: drift 13s ease-in-out -4s infinite alternate; }
+  .n3 { animation: drift 12s ease-in-out -8s infinite alternate; }
+  @keyframes drift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .n1, .n2, .n3 { animation: none; }
+  }
+  :global([data-motion="reduce"]) .n1,
+  :global([data-motion="reduce"]) .n2,
+  :global([data-motion="reduce"]) .n3 {
+    animation: none;
+  }
+</style>

@@ -1,19 +1,70 @@
 ---
+/* ============================================================
+   Bearings — /sheet (hub)
+
+   Three sheets, one place:
+   - The safety Sheet (/sheet itself): day-of logistics — what,
+     when, who to call, if-then plans. The original.
+   - The preparation worksheet: the deeper thinking page for the
+     days-to-weeks before.
+   - The integration worksheet: the structured page for after.
+
+   All three share one posture: fillable in memory, nothing saved,
+   print or save-as-PDF is the artifact.
+   ============================================================ */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Sheet from "../components/Sheet.svelte";
 ---
 
-<BaseLayout title="The Sheet — Bearings" section="before">
+<BaseLayout title="The Sheets — Bearings" section="before">
   <div class="sheet-page">
     <section class="reading">
       <p class="kicker">Print-first · nothing saved</p>
-      <h1>The Sheet</h1>
+      <h1>The Sheets</h1>
       <p class="lede">
-        A one-page plan you fill out ahead of time and print. If-then plans
-        made in advance tend to hold up even when in-the-moment thinking does
-        not.
+        Fill a sheet out ahead of time and print it — or save it as a PDF.
+        Plans made in advance tend to hold up even when in-the-moment
+        thinking does not.
       </p>
     </section>
+
+    <nav class="sheet-index" aria-label="The sheets">
+      <a href="/sheet/preparation" class="sheet-card">
+        <h2>Preparation worksheet</h2>
+        <p>
+          The deeper thinking page for before: why now, time and room to land,
+          people, what you're taking, if–then plans, boundaries, body basics.
+        </p>
+        <span class="when">Days to weeks before</span>
+      </a>
+      <a href="/sheet/session-focus" class="sheet-card">
+        <h2>Session focus worksheet</h2>
+        <p>
+          Coming with something specific to address, alone? Decide in advance
+          how you want to meet it, your exits if it gets heavy, and your
+          anchors back.
+        </p>
+        <span class="when">On the day, kept within reach</span>
+      </a>
+      <a href="/sheet/integration" class="sheet-card">
+        <h2>Integration worksheet</h2>
+        <p>
+          The structured page for after: specifics while they're close, naming
+          what was hard, holding the pull to act at a date, one small thing.
+        </p>
+        <span class="when">First hours to weeks after</span>
+      </a>
+    </nav>
+
+    <section class="safety-sheet">
+      <h2>The safety Sheet</h2>
+      <p class="lede">
+        Day-of logistics on one page: substance and testing, start and end
+        times, who to call, if–then plans, what "handled" means, and the
+        safety strip. If you only print one thing, this is the one.
+      </p>
+    </section>
+
     <Sheet client:load />
   </div>
 </BaseLayout>
@@ -24,5 +75,46 @@ import Sheet from "../components/Sheet.svelte";
   }
   .lede {
     margin-bottom: var(--space-4);
+  }
+  .sheet-index {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    margin-bottom: var(--space-6);
+  }
+  .sheet-card {
+    display: block;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.25s ease;
+  }
+  .sheet-card:hover,
+  .sheet-card:focus-visible {
+    border-color: var(--gold);
+  }
+  .sheet-card h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--space-2);
+  }
+  .sheet-card p {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    line-height: var(--leading-body);
+  }
+  .sheet-card .when {
+    display: block;
+    margin-top: var(--space-3);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .safety-sheet h2 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--space-2);
   }
 </style>

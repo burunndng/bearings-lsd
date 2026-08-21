@@ -1,0 +1,50 @@
+---
+/* ============================================================
+   Bearings — /sheet/integration
+
+   The structured page for the days after: specifics while they
+   are close, naming what was hard without scoring it, the pull to
+   act held at a date, and one small thing that might stick.
+   Content is defined in lib/worksheets.ts; this page is only the
+   route.
+
+   Nothing persisted. Print or save-as-PDF is the artifact.
+   ============================================================ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Worksheet from "../../components/Worksheet.svelte";
+import { INTEGRATION_WORKSHEET } from "../../lib/worksheets.ts";
+---
+
+<BaseLayout title="Integration worksheet — Bearings" section="integration">
+  <div class="sheet-page">
+    <section class="reading">
+      <p class="kicker">{INTEGRATION_WORKSHEET.kicker}</p>
+      <h1>{INTEGRATION_WORKSHEET.title}</h1>
+      <p class="lede">{INTEGRATION_WORKSHEET.lede}</p>
+      <p class="hub-link no-print">
+        Part of <a href="/sheet">the Sheets</a> · preparing instead? That one is{" "}
+        <a href="/sheet/preparation">here</a>
+      </p>
+    </section>
+    <Worksheet worksheet={INTEGRATION_WORKSHEET} client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-5);
+  }
+  .lede {
+    margin-bottom: var(--space-4);
+  }
+  .hub-link {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .hub-link a {
+    color: var(--gold);
+  }
+</style>
