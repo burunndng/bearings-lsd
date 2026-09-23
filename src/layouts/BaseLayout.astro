@@ -185,27 +185,6 @@ const nav = [
   .wordmark:focus-visible .compass {
     transform: rotate(45deg);
   }
-  /* Wide viewports: the toggle disappears entirely and the nav reads
-     as a plain inline row, same as before this change existed.
-     display: contents un-boxes <details> so it imposes no layout of
-     its own — <summary> and <nav> become direct flex children of
-     .head-right instead, and .summary-only rules below hide the
-     toggle chrome at this width. */
-  @media (min-width: 52rem) {
-    .nav-toggle {
-      display: contents;
-    }
-    .nav-toggle summary {
-      display: none;
-    }
-    /* <details> defaults to closed and nothing here forces it open at
-       this width — without this override the nav would be invisible
-       on desktop since the [open]-gated display:flex rule below would
-       never apply. */
-    .nav-toggle .site-nav {
-      display: flex;
-    }
-  }
 
   /* Narrow viewports: a real disclosure. Closed by default so eight
      section links never occupy vertical space above content — this
@@ -266,6 +245,34 @@ const nav = [
   }
   .nav-toggle[open] .site-nav {
     display: flex;
+  }
+
+  /* Wide viewports: the toggle disappears entirely and the nav reads
+     as a plain inline row, same as before this change existed.
+     display: contents un-boxes <details> so it imposes no layout of
+     its own — <summary> and <nav> become direct flex children of
+     .head-right instead, and the summary rule here hides the toggle
+     chrome at this width.
+
+     MUST stay after the base/narrow rules above: media queries add no
+     specificity, so with equal selectors source order decides the tie.
+     Placed before them (as it once was), the base `summary` display
+     and `.site-nav { display: none }` won at every width — desktop got
+     a dead "Sections" button and no menu at all. */
+  @media (min-width: 52rem) {
+    .nav-toggle {
+      display: contents;
+    }
+    .nav-toggle summary {
+      display: none;
+    }
+    /* <details> defaults to closed and nothing here forces it open at
+       this width — without this override the nav would be invisible
+       on desktop since the [open]-gated display:none rule above would
+       otherwise apply. */
+    .nav-toggle .site-nav {
+      display: flex;
+    }
   }
   @media (max-width: 51.9375rem) {
     .nav-toggle {
