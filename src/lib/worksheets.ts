@@ -36,6 +36,10 @@ export interface SectionDef {
   /** Optional pre-printed lines shown above the fillable fields
       (the if-then starters, the documented-phenomena list). */
   preprinted?: string[];
+  /** Optional single outbound link rendered under the intro — for the
+      rare place a worksheet needs to point somewhere actionable (drug
+      checking lives on /resources, not here). One link, no more. */
+  link?: { href: string; label: string };
   fields: FieldDef[];
   /** Renders the section with the urgent border register. */
   safety?: boolean;
@@ -199,7 +203,7 @@ export const PREPARATION_WORKSHEET: WorksheetDef = {
           kind: "line",
           id: "time-waiting",
           label: "Who is waiting on me, or expecting me somewhere",
-          placeholder: "Ideally nobody — name anyone who is",
+          placeholder: "Name anyone who is — and the message you can send if you're running late",
         },
         {
           kind: "line",
@@ -244,6 +248,10 @@ export const PREPARATION_WORKSHEET: WorksheetDef = {
       heading: "What I'm taking",
       intro:
         "Substances sold as one thing are sometimes something else, or something else mixed in. That is not a reason to panic — it is a reason to check, if checking is available to you. A clean result is information, not a guarantee.",
+      link: {
+        href: "/resources",
+        label: "Where to find drug checking and test kits",
+      },
       fields: [
         { kind: "line", id: "taking-what", label: "What", placeholder: "Substance" },
         { kind: "line", id: "taking-source", label: "From where", placeholder: "Source" },

@@ -15,7 +15,7 @@ sources:
 Reading what others have lived through — research accounts, careful
 journalism, other people's plain descriptions — is one of the more common
 things people do after a psychedelic experience. In one survey of 608 people
-with extended difficulties, 14% said reading helped. Much of that seems to
+with extended difficulties (Robinson et al., 2024), 14% said reading helped. Much of that seems to
 be simple recognition: this has happened to other people too.
 
 Other people's accounts are not proof of anything, and yours does not need

@@ -14,7 +14,7 @@ sources:
 
 Not everything on this shelf is solitary, and for some people the most
 useful thing is another person. In one survey of 608 people with extended
-difficulties after psychedelic use, talking with peers or community was
+difficulties after psychedelic use (Robinson et al., 2024), talking with peers or community was
 the support most often reported as helpful (34%); professional therapy or
 coaching was named by 18%. What people valued was being heard without
 judgment — not being interpreted, and not being advised.

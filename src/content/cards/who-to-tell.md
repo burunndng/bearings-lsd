@@ -9,6 +9,9 @@ sources:
   - cite: "Pilecki, B. et al. (2021). Ethical and legal issues in psychedelic harm reduction and integration therapy. Harm Reduction Journal."
     url: "https://doi.org/10.1186/s12954-021-00489-1"
     year: 2021
+  - cite: "Robinson, O. C. et al. (2024). Coming back together: coping and support strategies after extended difficulties. Frontiers in Psychology."
+    url: "https://doi.org/10.3389/fpsyg.2024.1369715"
+    year: 2024
 order: 20
 ---
 
@@ -30,6 +33,13 @@ A few questions that might help sort who to tell:
   with family?
 - Is there someone you trust who has some relevant context, rather than
   someone who would need everything explained and justified from zero?
+
+Some of what helps turns out to be very ordinary. In one survey of 608
+people with extended difficulties after psychedelic use, talking with peers
+or community was the support most often reported as helpful (Robinson et
+al., 2024) — and what people described valuing in those conversations was
+being heard, not advised. One person who can listen may be most of the
+answer.
 
 There's also a specific trap worth naming: the urge to convince someone
 else that this could help them too. That can come from a genuine wish to

@@ -154,13 +154,19 @@ const flat = grouped.length === 0;
      no sources, so the ABSENCE of this marker is not a demerit and
      must not be styled as a missing thing. It answers "is this
      grounded in something?" before the card is opened, which
-     previously required opening it. */
+     previously required opening it. Kept legible on small screens:
+     sourced and unsourced cards must be distinguishable at a glance,
+     so the marker sits a clear step above the faint register. */
   .sourced {
     font-family: var(--font-meta);
     font-size: var(--size-meta) !important;
     letter-spacing: 0.08em;
-    color: var(--ink-faint) !important;
+    color: var(--ink-soft) !important;
     margin-top: var(--space-3) !important;
+  }
+  .sourced span {
+    color: var(--gold);
+    font-weight: 700;
   }
   /* Section headings sit quietly. No group is emphasised over another. */
   .group-h {

@@ -179,7 +179,7 @@
 
   <section class="block">
     <h2>Why</h2>
-    <input type="text" bind:value={why} placeholder="One line, in your own words" class="why-input" />
+      <input type="text" bind:value={why} placeholder="One line, in your own words — why this, why now" class="why-input" />
   </section>
 
   <section class="block">

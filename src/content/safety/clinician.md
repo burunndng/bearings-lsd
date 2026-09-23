@@ -22,7 +22,7 @@ It is worth a conversation if you have, or a close family member has:
 
 - A personal or family history of psychosis, mania, or bipolar disorder.
 - A heart condition, or take medication that affects the heart.
-- Taken lithium or an MAOI — some combinations carry serious risk. A case
+- **Taken lithium or an MAOI — some combinations carry serious risk.** A case
   series has linked classic psychedelics taken alongside lithium specifically
   (not lamotrigine) with seizures.
 - Been changing psychiatric medication, especially antidepressants.

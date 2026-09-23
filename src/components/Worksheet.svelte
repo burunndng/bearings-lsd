@@ -50,6 +50,11 @@
       {#if section.intro}
         <p class="intro">{section.intro}</p>
       {/if}
+      {#if section.link}
+        <p class="section-link">
+          <a href={section.link.href}>{section.link.label}</a>
+        </p>
+      {/if}
       {#if section.preprinted}
         <ul class="preprinted">
           {#each section.preprinted as line}
@@ -157,6 +162,16 @@
     font-size: var(--size-sm);
     line-height: var(--leading-body);
     margin-bottom: var(--space-3);
+  }
+  .section-link {
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+  .section-link a {
+    color: var(--gold);
   }
   .preprinted {
     list-style: none;
