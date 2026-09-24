@@ -208,6 +208,27 @@ export type StoreKey = keyof KeyShape;
 
 const IDB_KEY_SET: ReadonlySet<string> = new Set(IDB_KEYS);
 
+const storageEvents =
+  typeof window !== "undefined" && "BroadcastChannel" in window
+    ? new BroadcastChannel("bearings-storage")
+    : null;
+
+storageEvents?.addEventListener("message", (event: MessageEvent<unknown>) => {
+  if (
+    typeof event.data === "object" &&
+    event.data !== null &&
+    "type" in event.data &&
+    event.data.type === "wipe"
+  ) {
+    window.location.reload();
+  }
+});
+
+function cloneForStorage<T>(value: T): T {
+  if (typeof value === "string") return value;
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
 function isIdbKey(key: string): key is IdbKey {
   return IDB_KEY_SET.has(key);
 }
@@ -237,12 +258,12 @@ const prodBacking: BackingStore = {
   set<T>(key: string, value: T) {
     return safe(async () => {
       if (isIdbKey(key)) {
-        await idbSet(key, value);
+        await idbSet(key, cloneForStorage(value));
         return;
       }
       localStorage.setItem(
         key,
-        typeof value === "string" ? value : JSON.stringify(value),
+        typeof value === "string" ? value : JSON.stringify(cloneForStorage(value)),
       );
     });
   },
@@ -268,7 +289,7 @@ export function memoryBacking(): BackingStore {
       return structuredClone(map.get(key)) as T;
     },
     async set<T>(key: string, value: T) {
-      map.set(key, structuredClone(value));
+      map.set(key, cloneForStorage(value));
     },
     async del(key: string) {
       map.delete(key);
@@ -296,6 +317,7 @@ export function createStore(backing: BackingStore) {
       await Promise.all(
         ([...IDB_KEYS, ...LS_KEYS] as StoreKey[]).map((k) => backing.del(k)),
       );
+      storageEvents?.postMessage({ type: "wipe" });
     },
   };
 }

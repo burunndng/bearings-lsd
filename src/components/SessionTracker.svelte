@@ -162,21 +162,27 @@
     active ? pending : held ? pending.slice(1) : [],
   );
 
-  async function persistNotes(next: Note[]) {
-    notes = next;
+  async function persistNotes(next: Note[]): Promise<boolean> {
     try {
       await save("bearings-notes", next);
+      notes = next;
+      storageError = false;
+      return true;
     } catch {
       storageError = true;
+      return false;
     }
   }
 
-  async function persistSessions(next: Session[]) {
-    sessions = next;
+  async function persistSessions(next: Session[]): Promise<boolean> {
     try {
       await save("bearings-sessions", next);
+      sessions = next;
+      storageError = false;
+      return true;
     } catch {
       storageError = true;
+      return false;
     }
   }
 
@@ -202,7 +208,7 @@
       question: text,
       createdAt: new Date().toISOString(),
     };
-    await persistSessions([session, ...sessions]);
+    if (!(await persistSessions([session, ...sessions]))) return;
     sharpenerOpen = false;
     announcement = "Question saved. It will be here until you write against it or set it aside.";
   }
@@ -222,7 +228,7 @@
       stage: "raw",
       promptId: fieldId,
     };
-    await persistNotes([note, ...notes]);
+    if (!(await persistNotes([note, ...notes]))) return;
     rawDrafts = { ...rawDrafts, [fieldId]: "" };
     announcement = "Saved on this device.";
   }
@@ -238,7 +244,7 @@
       stage: "interview",
       promptId,
     };
-    await persistNotes([note, ...notes]);
+    if (!(await persistNotes([note, ...notes]))) return;
     interviewDrafts = { ...interviewDrafts, [promptId]: "" };
     announcement = "Saved on this device.";
   }
@@ -257,7 +263,7 @@
         ? { ...n, tags: [...new Set([...(n.tags ?? []), tag])] }
         : n,
     );
-    await persistNotes(nextNotes);
+    if (!(await persistNotes(nextNotes))) return;
     tagDraft = "";
   }
 
@@ -277,8 +283,10 @@
   }
 
   async function setAside(session: Session) {
+    if (!(await persistSessions(sessions.filter((s) => s.id !== session.id)))) {
+      return;
+    }
     settingAsideId = null;
-    await persistSessions(sessions.filter((s) => s.id !== session.id));
     announcement = "Removed.";
   }
 

@@ -1,7 +1,7 @@
 /* ============================================================
    Bearings — Worksheet definitions (pure data, no I/O)
 
-   The two guided worksheets (/sheet/preparation and
+   The guided worksheets (/sheet/preparation, /sheet/session-focus, and
    /sheet/integration) are defined here as typed data and rendered
    by one dumb component (Worksheet.svelte). Content lives here so
    the renderer stays presentation-only and a future worksheet is
@@ -750,3 +750,30 @@ export const SESSION_FOCUS_WORKSHEET: WorksheetDef = {
     },
   ],
 };
+
+export const GUIDED_WORKSHEETS = [
+  {
+    href: "/sheet/preparation",
+    phase: "Before",
+    when: "Days to weeks before",
+    summary:
+      "Why now, time and room to land, people, what is being taken, if–then plans, boundaries, body basics, and tomorrow.",
+    worksheet: PREPARATION_WORKSHEET,
+  },
+  {
+    href: "/sheet/session-focus",
+    phase: "The day",
+    when: "On the day, kept within reach",
+    summary:
+      "A specific question for the day, the stance toward it, permission lines, exits, anchors, afterward, and honest limits.",
+    worksheet: SESSION_FOCUS_WORKSHEET,
+  },
+  {
+    href: "/sheet/integration",
+    phase: "After",
+    when: "First hours to weeks after",
+    summary:
+      "What happened, what was hard, the pull to act, one small thing, ordinary days, people, and support.",
+    worksheet: INTEGRATION_WORKSHEET,
+  },
+] as const;

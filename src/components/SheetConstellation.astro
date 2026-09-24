@@ -15,21 +15,40 @@
    animation is decorative only and switches off under both the
    system preference and the in-app motion toggle.
    ============================================================ */
+interface Props {
+  variant?: "pointer" | "hub";
+}
+
+const { variant = "pointer" } = Astro.props;
 ---
 
-<div class="constellation">
+<div class:list={["constellation", variant === "hub" && "constellation--hub"]}>
   <div class="c-copy">
-    <p class="c-head">Made plans earlier?</p>
-    <p class="c-sub">
-      They are where you left them. None of it expires, and nothing here
-      needs doing right now.
-    </p>
+    {
+      variant === "hub" ? (
+        <>
+          <p class="c-head">Choose a worksheet</p>
+          <p class="c-sub">
+            Three guided sheets, linked by when they tend to be useful. The
+            day-of safety Sheet follows on this page.
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="c-head">Made plans earlier?</p>
+          <p class="c-sub">
+            They are where you left them. None of it expires, and nothing here
+            needs doing right now.
+          </p>
+        </>
+      )
+    }
   </div>
 
   <svg
     viewBox="0 0 640 210"
     class="sky"
-    role="img"
+    role="group"
     aria-label="Three linked points: the preparation worksheet, the session focus worksheet, and the integration worksheet"
   >
     <line x1="122" y1="118" x2="318" y2="66" class="thread"></line>

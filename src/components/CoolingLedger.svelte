@@ -102,12 +102,15 @@
       ),
   );
 
-  async function persist(next: LedgerEntry[]) {
-    entries = next;
+  async function persist(next: LedgerEntry[]): Promise<boolean> {
     try {
       await save("bearings-ledger", next);
+      entries = next;
+      storageError = false;
+      return true;
     } catch {
       storageError = true;
+      return false;
     }
   }
 
@@ -128,7 +131,7 @@
       decidedAt: new Date().toISOString(),
       reviewAt: toIso(reviewDraft),
     };
-    await persist([entry, ...entries]);
+    if (!(await persist([entry, ...entries]))) return;
     formOpen = false;
     announcement =
       "Written down. It will be here when you open this page after that date — nothing will notify you.";
@@ -157,9 +160,9 @@
           }
         : e,
     );
+    if (!(await persist(next))) return;
     refiningId = null;
     refinementDraft = "";
-    await persist(next);
     announcement = "Marked.";
   }
 

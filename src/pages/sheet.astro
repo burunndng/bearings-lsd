@@ -2,7 +2,7 @@
 /* ============================================================
    Bearings — /sheet (hub)
 
-   Three sheets, one place:
+   Three guided worksheets and the day-of safety Sheet:
    - The safety Sheet (/sheet itself): day-of logistics — what,
      when, who to call, if-then plans. The original.
    - The preparation worksheet: the deeper thinking page for the
@@ -14,13 +14,15 @@
    ============================================================ */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Sheet from "../components/Sheet.svelte";
+import SheetConstellation from "../components/SheetConstellation.astro";
+import { GUIDED_WORKSHEETS } from "../lib/worksheets.ts";
 ---
 
-<BaseLayout title="The Sheets — Bearings" section="before">
+<BaseLayout title="Worksheets — Bearings" section="sheet">
   <div class="sheet-page">
     <section class="reading">
       <p class="kicker">Print-first · nothing saved</p>
-      <h1>The Sheets</h1>
+      <h1>Worksheets</h1>
       <p class="lede">
         Fill a sheet out ahead of time and print it — or save it as a PDF.
         Plans made in advance tend to hold up even when in-the-moment
@@ -28,36 +30,33 @@ import Sheet from "../components/Sheet.svelte";
       </p>
     </section>
 
-    <nav class="sheet-index" aria-label="The sheets">
-      <a href="/sheet/preparation" class="sheet-card">
-        <h2>Preparation worksheet</h2>
-        <p>
-          The deeper thinking page for before: why now, time and room to land,
-          people, what you're taking, if–then plans, boundaries, body basics.
-        </p>
-        <span class="when">Days to weeks before</span>
-      </a>
-      <a href="/sheet/session-focus" class="sheet-card">
-        <h2>Session focus worksheet</h2>
-        <p>
-          Coming with something specific to address, alone? Decide in advance
-          how you want to meet it, your exits if it gets heavy, and your
-          anchors back.
-        </p>
-        <span class="when">On the day, kept within reach</span>
-      </a>
-      <a href="/sheet/integration" class="sheet-card">
-        <h2>Integration worksheet</h2>
-        <p>
-          The structured page for after: specifics while they're close, naming
-          what was hard, holding the pull to act at a date, one small thing.
-        </p>
-        <span class="when">First hours to weeks after</span>
-      </a>
+    <SheetConstellation variant="hub" />
+
+    <nav class="sheet-index" aria-label="The guided worksheets">
+      {
+        GUIDED_WORKSHEETS.map((item, index) => (
+          <a href={item.href} class="sheet-card">
+            <div class="sheet-card-head">
+              <span class="sheet-number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p class="sheet-phase">{item.phase}</p>
+                <h2>{item.worksheet.title}</h2>
+              </div>
+            </div>
+            <p>{item.summary}</p>
+            <span class="when">{item.when}</span>
+          </a>
+        ))
+      }
     </nav>
 
-    <section class="safety-sheet">
-      <h2>The safety Sheet</h2>
+    <section class="safety-sheet" id="safety-sheet">
+      <div class="sheet-card-head">
+        <span class="sheet-number" aria-hidden="true">00</span>
+        <h2>The safety Sheet</h2>
+      </div>
       <p class="lede">
         Day-of logistics on one page: substance and testing, start and end
         times, who to call, if–then plans, what "handled" means, and the
@@ -97,11 +96,37 @@ import Sheet from "../components/Sheet.svelte";
   .sheet-card:focus-visible {
     border-color: var(--gold);
   }
-  .sheet-card h2 {
-    font-size: var(--size-lg);
+  .sheet-card-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
     margin-bottom: var(--space-2);
   }
-  .sheet-card p {
+  .sheet-number {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold-bright);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.12em;
+  }
+  .sheet-phase {
+    color: var(--ink-faint);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .sheet-card-head h2,
+  .safety-sheet h2 {
+    font-size: var(--size-lg);
+  }
+  .sheet-card > p {
     color: var(--ink-soft);
     font-size: var(--size-sm);
     line-height: var(--leading-body);
@@ -114,9 +139,5 @@ import Sheet from "../components/Sheet.svelte";
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--gold);
-  }
-  .safety-sheet h2 {
-    font-size: var(--size-lg);
-    margin-bottom: var(--space-2);
   }
 </style>

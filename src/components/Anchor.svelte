@@ -42,39 +42,54 @@
     }
   });
 
-  async function persist() {
+  async function persist(
+    nextQuestion: string,
+    nextReadings: Reading[],
+  ): Promise<boolean> {
     try {
-      await save("bearings-anchor", { question, readings });
+      await save("bearings-anchor", {
+        question: nextQuestion,
+        readings: nextReadings,
+      });
+      question = nextQuestion;
+      readings = nextReadings;
+      storageError = false;
+      return true;
     } catch {
       storageError = true;
+      return false;
     }
   }
 
-  function setQuestion() {
+  async function setQuestion() {
     const text = draftQuestion.trim();
     if (!text) return;
-    question = text;
+    if (!(await persist(text, readings))) return;
     draftQuestion = "";
     editingQuestion = false;
-    persist();
   }
 
   async function addReading() {
-    readings = [{ value, at: new Date().toISOString() }, ...readings];
-    await persist();
+    await persist(question, [
+      { value, at: new Date().toISOString() },
+      ...readings,
+    ]);
   }
 
   async function removeReading(at: string) {
-    readings = readings.filter((r) => r.at !== at);
-    await persist();
+    await persist(
+      question,
+      readings.filter((r) => r.at !== at),
+    );
   }
 
   async function clearAnchor() {
-    question = "";
-    readings = [];
-    editingQuestion = true;
     try {
       await clear("bearings-anchor");
+      question = "";
+      readings = [];
+      editingQuestion = true;
+      storageError = false;
     } catch {
       storageError = true;
     }

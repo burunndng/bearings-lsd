@@ -55,13 +55,16 @@
   }
 
   async function setMotion() {
+    if (reduceMotion) {
+      document.documentElement.setAttribute("data-motion", "reduce");
+    } else {
+      document.documentElement.removeAttribute("data-motion");
+    }
     try {
       if (reduceMotion) {
         await save("bearings-motion", "reduce");
-        document.documentElement.setAttribute("data-motion", "reduce");
       } else {
         await clear("bearings-motion");
-        document.documentElement.removeAttribute("data-motion");
       }
     } catch {
       message = "This browser is not allowing settings to be saved.";

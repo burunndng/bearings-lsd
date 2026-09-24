@@ -43,12 +43,15 @@
     }
   });
 
-  async function saveNotes(next: Note[]) {
-    notes = next;
+  async function saveNotes(next: Note[]): Promise<boolean> {
     try {
       await save("bearings-notes", next);
+      notes = next;
+      storageError = false;
+      return true;
     } catch {
       storageError = true;
+      return false;
     }
   }
 
@@ -56,7 +59,7 @@
     const text = body.trim();
     if (!text) return;
 
-    await saveNotes([
+    const saved = await saveNotes([
       {
         id: crypto.randomUUID(),
         body: text,
@@ -65,14 +68,16 @@
       },
       ...notes,
     ]);
+    if (!saved) return;
     body = "";
     revisitLabel = null;
     announcement = "Note saved on this device.";
   }
 
   async function removeNote(id: string) {
-    await saveNotes(notes.filter((note) => note.id !== id));
-    announcement = "Note deleted.";
+    if (await saveNotes(notes.filter((note) => note.id !== id))) {
+      announcement = "Note deleted.";
+    }
   }
 
   function requestClearNotes() {
@@ -90,9 +95,10 @@
        protection the easier one to reach. */
     const had = notes.length;
     confirmingClear = false;
-    notes = [];
     try {
       await clear("bearings-notes");
+      notes = [];
+      storageError = false;
       announcement = `All notes deleted (${had}).`;
     } catch {
       storageError = true;

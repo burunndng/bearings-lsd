@@ -6,11 +6,15 @@
    uncertainty. Review cadence visible so users judge freshness.
    ============================================================ */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PillarGlyph from "../components/PillarGlyph.astro";
 import { getCollection } from "astro:content";
 
 const entries = (await getCollection("learn"))
   .filter((e) => !e.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
+
+const deepEntries = entries.filter((entry) => entry.data.tone === "deep");
+const evidenceEntries = entries.filter((entry) => entry.data.tone !== "deep");
 
 const fmt = (d?: Date) =>
   d ? d.toLocaleDateString("en-CA", { year: "numeric", month: "short" }) : null;
@@ -27,33 +31,67 @@ const fmt = (d?: Date) =>
     </p>
   </section>
 
-  <ul class="shelf">
-    {
-      entries.map((e) => {
-        /* One quiet meta line rather than a stack of them. Source
-           count is shown because "every claim sourced" is a promise
-           this shelf makes in its own lede — a reader should be able
-           to see it holds before opening the entry, not after. */
-        const reviewed = fmt(e.data.lastReviewed);
-        const count = e.data.sources.length;
-        const meta = [
-          reviewed && `Last reviewed ${reviewed}`,
-          count > 0 && `${count} ${count === 1 ? "source" : "sources"}`,
-        ].filter(Boolean);
-        const deep = e.data.tone === "deep";
-        return (
-          <li>
-            <a href={`/learn/${e.id}`} class={deep ? "card deep" : "card"}>
-              {deep && <p class="tone-tag">Deep work</p>}
-              <h2>{e.data.title}</h2>
-              {e.data.summary && <p>{e.data.summary}</p>}
-              {meta.length > 0 && <p class="rev">{meta.join(" · ")}</p>}
-            </a>
-          </li>
-        );
-      })
-    }
-  </ul>
+  <section class="deep-work" id="deep-work" aria-labelledby="deep-work-h">
+    <div class="group-heading">
+      <PillarGlyph name="deep-work" size={56} />
+      <div>
+        <p class="kicker">Deep Work</p>
+        <h2 id="deep-work-h">Looking longer</h2>
+        <p>
+          A small set of reflective tools for when an experience keeps asking
+          for attention. None of them is a next step.
+        </p>
+      </div>
+    </div>
+    <ul class="shelf">
+      {
+        deepEntries.map((e) => {
+          const reviewed = fmt(e.data.lastReviewed);
+          return (
+            <li>
+              <a href={`/learn/${e.id}`} class="card deep">
+                <p class="tone-tag">Deep work</p>
+                <h3>{e.data.title}</h3>
+                {e.data.summary && <p>{e.data.summary}</p>}
+                {reviewed && <p class="rev">Last reviewed {reviewed}</p>}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  <section class="evidence-work" id="evidence" aria-labelledby="evidence-h">
+    <div class="group-heading">
+      <PillarGlyph name="learn" size={48} />
+      <div>
+        <p class="kicker">Evidence &amp; context</p>
+        <h2 id="evidence-h">What is known, and how well</h2>
+      </div>
+    </div>
+    <ul class="shelf">
+      {
+        evidenceEntries.map((e) => {
+          const reviewed = fmt(e.data.lastReviewed);
+          const count = e.data.sources.length;
+          const meta = [
+            reviewed && `Last reviewed ${reviewed}`,
+            count > 0 && `${count} ${count === 1 ? "source" : "sources"}`,
+          ].filter(Boolean);
+          return (
+            <li>
+              <a href={`/learn/${e.id}`} class="card">
+                <h3>{e.data.title}</h3>
+                {e.data.summary && <p>{e.data.summary}</p>}
+                {meta.length > 0 && <p class="rev">{meta.join(" · ")}</p>}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
 </BaseLayout>
 
 <style>
@@ -75,18 +113,56 @@ const fmt = (d?: Date) =>
      magenta stays reserved for urgent/safety. A full wash, a garnet
      border on every edge, and the tag; this card should read as a
      different colour at a glance, not on inspection. */
+  .deep-work,
+  .evidence-work {
+    scroll-margin-top: var(--space-4);
+  }
+  .deep-work {
+    border: 1px solid var(--garnet);
+    border-left-width: 3px;
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    background: var(--garnet-wash);
+  }
+  .evidence-work {
+    margin-top: var(--space-6);
+  }
+  .group-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    max-width: var(--measure);
+    margin-bottom: var(--space-4);
+  }
+  .group-heading > div {
+    min-width: 0;
+  }
+  .group-heading :global(.pillar-glyph) {
+    flex: none;
+    color: var(--garnet);
+  }
+  .group-heading h2 {
+    font-size: var(--size-xl);
+    margin-bottom: var(--space-2);
+  }
+  .group-heading p:last-child {
+    color: var(--ink-soft);
+  }
+  .deep-work .shelf {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .card.deep {
+    height: 100%;
     border-color: var(--garnet);
     border-left-width: 3px;
-    background: linear-gradient(var(--garnet-wash), var(--garnet-wash)),
-      var(--void-2);
+    background: var(--void-2);
   }
   .card.deep:hover,
   .card.deep:focus-within {
     border-color: var(--garnet);
     box-shadow: var(--glow-garnet);
   }
-  .card.deep h2 {
+  .card.deep h3 {
     color: var(--garnet);
   }
   .tone-tag {
@@ -96,5 +172,13 @@ const fmt = (d?: Date) =>
     text-transform: uppercase;
     color: var(--garnet);
     margin-bottom: var(--space-2);
+  }
+  @media (max-width: 48rem) {
+    .deep-work .shelf {
+      grid-template-columns: 1fr;
+    }
+    .group-heading {
+      align-items: flex-start;
+    }
   }
 </style>

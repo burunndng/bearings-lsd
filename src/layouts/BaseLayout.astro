@@ -11,6 +11,7 @@
 import "../styles/global.css";
 import SafetyFooter from "../components/SafetyFooter.astro";
 import NightField from "../components/NightField.astro";
+import { pwaInfo } from "virtual:pwa-info";
 
 interface Props {
   title?: string;
@@ -20,6 +21,7 @@ interface Props {
     | "between"
     | "integration"
     | "learn"
+    | "sheet"
     | "combinations"
     | "resources"
     | "notes"
@@ -39,18 +41,24 @@ const {
    else gets the default ultraviolet preparation register. */
 const register = section === "integration" ? "integration" : "preparation";
 
-const nav = [
+const primaryNav = [
   { href: "/before", label: "Before", id: "before" },
   { href: "/between", label: "In between", id: "between" },
   { href: "/integration", label: "Integration", id: "integration" },
   { href: "/learn", label: "Learn", id: "learn" },
-  { href: "/combinations", label: "Combinations", id: "combinations" },
+  { href: "/sheet", label: "Worksheets", id: "sheet" },
   { href: "/resources", label: "Resources", id: "resources" },
+] as const;
+
+const toolNav = [
+  { href: "/combinations", label: "Combinations", id: "combinations" },
   { href: "/notes", label: "Notes", id: "notes" },
   { href: "/sessions", label: "Sessions", id: "sessions" },
   { href: "/strategy", label: "Strategy", id: "strategy" },
   { href: "/settings", label: "Settings", id: "settings" },
 ] as const;
+
+const mobileNav = [...primaryNav, ...toolNav] as const;
 ---
 
 <!doctype html>
@@ -62,7 +70,11 @@ const nav = [
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f5f4f1" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    {pwaInfo?.webManifest.linkTag && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
     <title>{title}</title>
+    <script src="/src/pwa.ts"></script>
 
     {/* No-flash theme + motion: set data-theme and data-motion before
         paint. Respects explicit user choices in localStorage, else
@@ -96,20 +108,41 @@ const nav = [
         <span>bearings</span>
       </a>
       <div class="head-right">
-        {/* Native <details>/<summary>: no JS, no third-party menu
-            library, keyboard-accessible by default. At wide widths
-            this renders as display:contents (an ordinary nav row);
-            only below the narrow breakpoint does it become a
-            disclosure toggle, so 8 nav items never wrap into two or
-            three rows above content on a phone. */}
+        <nav class="site-nav site-nav--primary" aria-label="Sections">
+          {
+            primaryNav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={section === item.id ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <details class="tools-menu">
+          <summary>Tools</summary>
+          <nav class="site-nav site-nav--tools" aria-label="Tools">
+            {
+              toolNav.map((item) => (
+                <a
+                  href={item.href}
+                  aria-current={section === item.id ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </details>
         <details class="nav-toggle">
           <summary aria-label="Sections menu">
             <span class="nav-toggle-mark" aria-hidden="true"></span>
             Sections
           </summary>
-          <nav class="site-nav" aria-label="Sections">
+          <nav class="site-nav site-nav--mobile" aria-label="Sections and tools">
             {
-              nav.map((item) => (
+              mobileNav.map((item) => (
                 <a
                   href={item.href}
                   aria-current={section === item.id ? "page" : undefined}
@@ -122,7 +155,7 @@ const nav = [
         </details>
         <img
           class="brand-logo"
-          src="/img/s3rke-logo.png"
+          src="/img/s3rke-logo.webp"
           alt="S3rke"
           width="28"
           height="28"
@@ -186,10 +219,11 @@ const nav = [
     transform: rotate(45deg);
   }
 
-  /* Narrow viewports: a real disclosure. Closed by default so eight
-     section links never occupy vertical space above content — this
-     is the fix for the header wrapping into two or three rows on a
-     phone before someone reaches a page's content, urgent or not. */
+  .tools-menu,
+  .nav-toggle {
+    position: relative;
+  }
+  .tools-menu summary,
   .nav-toggle summary {
     display: inline-flex;
     align-items: center;
@@ -204,12 +238,24 @@ const nav = [
     cursor: pointer;
     list-style: none;
   }
+  .tools-menu summary::-webkit-details-marker,
   .nav-toggle summary::-webkit-details-marker {
     display: none;
   }
+  .tools-menu summary:hover,
+  .tools-menu summary:focus-visible,
   .nav-toggle summary:hover,
   .nav-toggle summary:focus-visible {
     color: var(--gold-bright);
+  }
+  .tools-menu summary::after {
+    content: "+";
+    color: var(--ink-faint);
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .tools-menu[open] summary::after {
+    content: "−";
   }
   .nav-toggle-mark {
     display: inline-block;
@@ -240,56 +286,37 @@ const nav = [
   .nav-toggle[open] .nav-toggle-mark::after {
     transform: translate(-50%, -50%) rotate(90deg);
   }
-  .nav-toggle .site-nav {
+  .site-nav.site-nav--tools,
+  .site-nav.site-nav--mobile {
     display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + var(--space-2));
+    z-index: 20;
+    min-width: 13rem;
+    padding: var(--space-2) var(--space-3);
+    background: var(--void-2);
+    border: 1px solid var(--grid-line);
+    border-radius: var(--radius);
   }
-  .nav-toggle[open] .site-nav {
+  .tools-menu[open] .site-nav--tools,
+  .nav-toggle[open] .site-nav--mobile {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  /* Wide viewports: the toggle disappears entirely and the nav reads
-     as a plain inline row, same as before this change existed.
-     display: contents un-boxes <details> so it imposes no layout of
-     its own — <summary> and <nav> become direct flex children of
-     .head-right instead, and the summary rule here hides the toggle
-     chrome at this width.
-
-     MUST stay after the base/narrow rules above: media queries add no
-     specificity, so with equal selectors source order decides the tie.
-     Placed before them (as it once was), the base `summary` display
-     and `.site-nav { display: none }` won at every width — desktop got
-     a dead "Sections" button and no menu at all. */
-  @media (min-width: 52rem) {
-    .nav-toggle {
-      display: contents;
-    }
-    .nav-toggle summary {
+  @media (max-width: 61.9375rem) {
+    .site-nav.site-nav--primary,
+    .tools-menu {
       display: none;
     }
-    /* <details> defaults to closed and nothing here forces it open at
-       this width — without this override the nav would be invisible
-       on desktop since the [open]-gated display:none rule above would
-       otherwise apply. */
-    .nav-toggle .site-nav {
-      display: flex;
+    .nav-toggle {
+      display: block;
     }
   }
-  @media (max-width: 51.9375rem) {
+  @media (min-width: 62rem) {
     .nav-toggle {
-      position: relative;
-    }
-    .nav-toggle[open] .site-nav {
-      flex-direction: column;
-      align-items: flex-start;
-      position: absolute;
-      right: 0;
-      top: calc(100% + var(--space-2));
-      z-index: 20;
-      min-width: 12rem;
-      padding: var(--space-2) var(--space-3);
-      background: var(--void-2);
-      border: 1px solid var(--grid-line);
-      border-radius: var(--radius);
+      display: none;
     }
   }
 

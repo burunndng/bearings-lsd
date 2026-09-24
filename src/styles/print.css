@@ -85,6 +85,20 @@
     display: none !important;
   }
 
+  .sheet-page:has(.print-one) > :not(:has(.worksheet-form)):not(:has(.sheet-form)) {
+    display: none !important;
+  }
+
+  .worksheet.print-one .block,
+  .sheet.print-one .block {
+    display: none !important;
+  }
+
+  .worksheet.print-one .block.print-target,
+  .sheet.print-one .block.print-target {
+    display: block !important;
+  }
+
   .sheet-page .if-then-row,
   .sheet-page .safety-strip {
     break-inside: avoid;

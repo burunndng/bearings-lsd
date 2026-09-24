@@ -28,6 +28,17 @@ test("save then load round-trips a value", async () => {
   ]);
 });
 
+test("save normalizes proxy-backed values", async () => {
+  const store = createStore(memoryBacking());
+  const raw = [{ id: "a", body: "x", createdAt: "t", tags: ["one"] }];
+  const nested = new Proxy(raw[0], {});
+  const proxied = new Proxy([nested], {});
+
+  await store.save("bearings-notes", proxied);
+
+  expect(await store.load("bearings-notes")).toEqual(raw);
+});
+
 test("a returned value is cloned — mutating it cannot leak into the store", async () => {
   const store = createStore(memoryBacking());
   await store.save("bearings-ledger", [

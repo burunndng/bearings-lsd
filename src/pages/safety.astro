@@ -6,6 +6,7 @@
    moralism. Referrals pulled from the single-source-of-truth file.
    ============================================================ */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ReferralList from "../components/ReferralList.svelte";
 import { getCollection, render } from "astro:content";
 import { referrals, emergency, lastVerified } from "../lib/referrals.ts";
 
@@ -70,6 +71,13 @@ const routes = [
     </p>
   </aside>
 
+  <ReferralList
+    client:load
+    initialReferrals={referrals}
+    initialLastVerified={lastVerified}
+    emergencyNote={emergency.note}
+  />
+
   <div class="routes">
     {
       routes.map((route) => (
@@ -90,33 +98,6 @@ const routes = [
       ))
     }
   </div>
-
-  <section class="reading referrals" aria-labelledby="ref-h">
-    <h2 id="ref-h">Where to reach people</h2>
-    <ul class="ref-list">
-      {
-        referrals.map((r) => (
-          <li>
-            <span class="ref-name">{r.name}</span>
-            <span class="ref-who">{r.who}</span>
-            <a
-              class="ref-detail"
-              href={r.href}
-              target={r.href.startsWith("https:") ? "_blank" : undefined}
-              rel={r.href.startsWith("https:") ? "noopener noreferrer" : undefined}
-            >
-              {r.detail}
-            </a>
-            <span class="ref-region">{r.region}</span>
-          </li>
-        ))
-      }
-    </ul>
-    <p class="verified">
-      {emergency.note} Last checked {lastVerified}. If a number looks out of
-      date, treat local emergency services as the reliable route.
-    </p>
-  </section>
 </BaseLayout>
 
 <style>
@@ -143,10 +124,12 @@ const routes = [
   }
   .routes {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-4);
     margin: var(--space-5) 0;
   }
   .route {
+    min-width: 0;
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     padding: var(--space-4);
@@ -160,7 +143,13 @@ const routes = [
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    min-width: 0;
     margin-bottom: var(--space-3);
+  }
+  .route-head h2,
+  .route-body {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
   /* shape differs per route, not only color (a11y) */
   .marker {
@@ -189,37 +178,5 @@ const routes = [
     font-weight: 600;
     color: var(--ink);
     margin-bottom: var(--space-2);
-  }
-  .referrals {
-    margin-top: var(--space-5);
-    margin-bottom: var(--space-5);
-  }
-  .ref-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--space-3);
-    margin-top: var(--space-3);
-  }
-  .ref-list li {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--rule);
-  }
-  .ref-name {
-    font-weight: 600;
-  }
-  .ref-detail,
-  .ref-who,
-  .ref-region {
-    color: var(--ink-soft);
-    font-size: var(--size-sm);
-  }
-  .verified {
-    color: var(--ink-faint);
-    font-size: var(--size-sm);
-    margin-top: var(--space-3);
   }
 </style>

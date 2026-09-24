@@ -6,6 +6,7 @@
    ============================================================ */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import MotivationChooser from "../components/MotivationChooser.svelte";
+import PillarGlyph from "../components/PillarGlyph.astro";
 ---
 
 <BaseLayout>
@@ -60,24 +61,70 @@ import MotivationChooser from "../components/MotivationChooser.svelte";
     </svg>
   </div>
 
-  <nav class="sections" aria-label="Sections">
-    <a class="card" href="/before">
-      <h3>Before</h3>
-      <p>Logistics, support, boundaries, expectations, safety.</p>
+  <nav class="sections" aria-label="Phases">
+    <a class="card phase-card" href="/before">
+      <PillarGlyph name="before" size={42} />
+      <div>
+        <h3>Before</h3>
+        <p>Logistics, support, boundaries, expectations, safety.</p>
+      </div>
     </a>
-    <a class="card" href="/between">
-      <h3>In between</h3>
-      <p>While a psychedelic experience is underway, for you or someone you are with.</p>
+    <a class="card phase-card" href="/between">
+      <PillarGlyph name="between" size={42} />
+      <div>
+        <h3>In between</h3>
+        <p>A small constellation of orientation while something is underway.</p>
+      </div>
     </a>
-    <a class="card" href="/integration">
-      <h3>Integration</h3>
-      <p>Rest, notes, connection, unsettled feelings, resources.</p>
-    </a>
-    <a class="card" href="/learn">
-      <h3>Learn</h3>
-      <p>Evidence, uncertainty, cultural context, harm reduction.</p>
+    <a class="card phase-card" href="/integration">
+      <PillarGlyph name="integration" size={42} />
+      <div>
+        <h3>Integration</h3>
+        <p>Rest, notes, connection, unsettled feelings, resources.</p>
+      </div>
     </a>
   </nav>
+
+  <section class="deeper" aria-labelledby="deeper-h">
+    <div class="deeper-heading">
+      <p class="kicker">// beyond the moment</p>
+      <h2 id="deeper-h" class="section-h">Go deeper</h2>
+      <p class="section-note">
+        Learn the evidence, work with a prompt, print a page, or find a
+        source worth keeping.
+      </p>
+    </div>
+    <nav class="deeper-grid" aria-label="Learn, worksheets, resources, and deep work">
+      <a class="deep-card" href="/learn">
+        <PillarGlyph name="learn" size={52} />
+        <div>
+          <h3>Learn</h3>
+          <p>Evidence, uncertainty, cultural context, and harm reduction.</p>
+        </div>
+      </a>
+      <a class="deep-card" href="/sheet">
+        <PillarGlyph name="sheets" size={52} />
+        <div>
+          <h3>Worksheets</h3>
+          <p>Printable pages for before, the day of, and after.</p>
+        </div>
+      </a>
+      <a class="deep-card" href="/resources">
+        <PillarGlyph name="resources" size={52} />
+        <div>
+          <h3>Resources</h3>
+          <p>Organizations, papers, and places worth returning to.</p>
+        </div>
+      </a>
+      <a class="deep-card deep-card--accent" href="/learn#deep-work">
+        <PillarGlyph name="deep-work" size={52} />
+        <div>
+          <h3>Deep Work</h3>
+          <p>A quiet place to stay with one prompt until it changes shape.</p>
+        </div>
+      </a>
+    </nav>
+  </section>
 </BaseLayout>
 
 <style>
@@ -132,6 +179,63 @@ import MotivationChooser from "../components/MotivationChooser.svelte";
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     margin-bottom: var(--space-6);
   }
+  .phase-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .phase-card :global(.pillar-glyph) {
+    flex: none;
+    margin-top: var(--space-1);
+    color: var(--gold);
+  }
+  .deeper {
+    position: relative;
+    z-index: 2;
+    margin-bottom: var(--space-6);
+  }
+  .deeper-heading {
+    max-width: var(--measure);
+    margin-bottom: var(--space-4);
+  }
+  .deeper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .deep-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-4);
+    min-height: 11rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .deep-card:hover,
+  .deep-card:focus-visible {
+    border-color: var(--gold);
+    background: var(--paper-raised);
+  }
+  .deep-card :global(.pillar-glyph) {
+    color: var(--ink-soft);
+  }
+  .deep-card--accent :global(.pillar-glyph) {
+    color: var(--garnet);
+  }
+  .deep-card h3 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--space-2);
+  }
+  .deep-card p {
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    line-height: var(--leading-body);
+  }
   @media (max-width: 48rem) {
     .hero {
       grid-template-columns: 1fr;
@@ -140,6 +244,9 @@ import MotivationChooser from "../components/MotivationChooser.svelte";
     .hero-art {
       justify-self: center;
       width: min(72vw, 300px);
+    }
+    .deeper-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

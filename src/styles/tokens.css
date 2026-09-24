@@ -198,12 +198,15 @@
     --amber: #8c6900;
     --magenta: #c92553;
     --indigo: #456fab;
+    --garnet: #8a3a52;
 
     /* Paper does not glow. */
     --glow-uv: none;
     --glow-amber: none;
     --glow-indigo: none;
     --glow-magenta: none;
+    --glow-garnet: none;
+    --garnet-wash: rgba(138, 58, 82, 0.07);
     --glow-dot-amber: none;
 
     --signal: var(--magenta);

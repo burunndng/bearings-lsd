@@ -1,6 +1,7 @@
 ---
 title: "Four lenses for looking back"
 summary: "Image, shape, state, and symbol — four optional ways to look at an experience, plus one plain question for an ordinary week."
+tone: deep
 order: 61
 lastReviewed: 2026-08-20
 ---

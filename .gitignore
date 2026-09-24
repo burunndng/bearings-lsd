@@ -1,6 +1,8 @@
 # Build output — regenerated, never committed
 dist/
 .astro/
+test-results/
+playwright-report/
 
 # Dependencies
 node_modules/

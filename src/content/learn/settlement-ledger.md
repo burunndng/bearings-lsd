@@ -1,6 +1,7 @@
 ---
 title: "A settlement ledger — watching whether an insight sticks"
 summary: "A dated three-column log plus a weekly check — felt-true, still-hums, ordinary-life-says — for seeing whether something is settling or just held."
+tone: deep
 order: 65
 lastReviewed: 2026-08-20
 ---

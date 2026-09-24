@@ -22,13 +22,33 @@
 
   let values = $state<Record<string, string>>({});
   let checks = $state<Record<string, boolean>>({});
+  let printTarget = $state<string | null>(null);
 
   function printSheet() {
     window.print();
   }
+
+  function sectionId(heading: string) {
+    return heading
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  }
+
+  function sectionNumber(index: number) {
+    return String(index + 1).padStart(2, "0");
+  }
+
+  function printPart(id: string) {
+    printTarget = id;
+    window.addEventListener("afterprint", () => (printTarget = null), { once: true });
+    window.print();
+  }
 </script>
 
-<div class="sheet-warning no-print" role="note">
+<div class="worksheet-form">
+  <div class="sheet-warning no-print" role="note">
   <p>
     <strong>Nothing here is saved.</strong> This stays in your browser's memory
     only, and disappears when you reload or close this page. Print it or save
@@ -42,11 +62,49 @@
   </button>
 </div>
 
-<form class="worksheet" onsubmit={(e) => e.preventDefault()}>
+<nav class="worksheet-index no-print" aria-label={`${worksheet.title} sections`}>
+  <div class="index-head">
+    <span>Field map</span>
+    <strong>{worksheet.sections.length} parts</strong>
+  </div>
+  <ol>
+    {#each worksheet.sections as section, index (section.heading)}
+      <li>
+        <a href={`#${sectionId(section.heading)}`}>
+          <span class="index-number" aria-hidden="true">{sectionNumber(index)}</span>
+          <span>{section.heading}</span>
+        </a>
+      </li>
+    {/each}
+  </ol>
+</nav>
+
+<form
+  class="worksheet"
+  class:print-one={printTarget !== null}
+  onsubmit={(e) => e.preventDefault()}
+>
   <p class="ws-title">{worksheet.title}</p>
-  {#each worksheet.sections as section (section.heading)}
-    <section class="block" class:safety-strip={section.safety}>
-      <h2>{section.heading}</h2>
+  {#each worksheet.sections as section, index (section.heading)}
+    {@const partId = sectionId(section.heading)}
+    <section
+      class="block"
+      class:safety-strip={section.safety}
+      class:print-target={printTarget === partId}
+      id={partId}
+    >
+      <div class="section-heading">
+        <span class="section-number" aria-hidden="true">{sectionNumber(index)}</span>
+        <h2>{section.heading}</h2>
+        <button
+          type="button"
+          class="part-print no-print"
+          onclick={() => printPart(partId)}
+          aria-label={`Print only ${section.heading}`}
+        >
+          Print this part
+        </button>
+      </div>
       {#if section.intro}
         <p class="intro">{section.intro}</p>
       {/if}
@@ -103,6 +161,7 @@
 
   <p class="footnote">{worksheet.footnote}</p>
 </form>
+</div>
 
 <style>
   .sheet-warning {
@@ -133,6 +192,62 @@
     box-shadow: 0 0 20px var(--gold-glow);
   }
 
+  .worksheet-index {
+    max-width: 72ch;
+    margin-bottom: var(--space-5);
+    border-block: 1px solid var(--rule);
+    padding-block: var(--space-3);
+  }
+  .index-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+    color: var(--ink-faint);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .index-head strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .worksheet-index ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .worksheet-index a {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    color: var(--ink-soft);
+    font-size: var(--size-sm);
+    text-decoration: none;
+  }
+  .worksheet-index a:hover,
+  .worksheet-index a:focus-visible {
+    color: var(--gold-bright);
+  }
+  .index-number {
+    color: var(--gold);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.1em;
+  }
+  .worksheet-index a:hover .index-number,
+  .worksheet-index a:focus-visible .index-number {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
   /* The printed artifact starts here. */
   .ws-title {
     font-family: var(--font-meta);
@@ -149,13 +264,49 @@
     margin-bottom: var(--space-6);
   }
   .block {
+    position: relative;
+    scroll-margin-top: var(--space-4);
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     padding: var(--space-4);
   }
+  .section-heading {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .part-print {
+    min-height: var(--tap-min);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding-inline: var(--space-3);
+    background: transparent;
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: var(--size-sm);
+    cursor: pointer;
+  }
+  .part-print:hover,
+  .part-print:focus-visible {
+    border-color: var(--gold);
+    color: var(--gold-bright);
+  }
+  .section-number {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    color: var(--gold);
+    font-family: var(--font-meta);
+    font-size: var(--size-meta);
+    letter-spacing: 0.1em;
+  }
   .block h2 {
     font-size: var(--size-lg);
-    margin-bottom: var(--space-3);
   }
   .intro {
     color: var(--ink-soft);
@@ -253,9 +404,33 @@
     border-color: var(--route-urgent);
     border-width: 2px;
   }
+  .safety-strip .section-number {
+    border-color: var(--route-urgent);
+    color: var(--route-urgent);
+  }
   .footnote {
     color: var(--ink-faint);
     font-size: var(--size-sm);
     max-width: 72ch;
+  }
+  @media (max-width: 30rem) {
+    .worksheet-index ol {
+      grid-template-columns: 1fr;
+    }
+    .section-heading {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: var(--space-2);
+    }
+    .section-number {
+      width: 2rem;
+      height: 2rem;
+    }
+    .part-print {
+      grid-column: 2;
+      justify-self: start;
+    }
+    .pair-row {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

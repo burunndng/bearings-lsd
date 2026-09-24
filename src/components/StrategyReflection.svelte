@@ -61,21 +61,24 @@
     currentState.trim() || recentExperience.trim() || observedTension.trim(),
   );
 
-  async function generateAndStore() {
+  async function generateAndStore(): Promise<boolean> {
     const reading = buildReading({
       currentState: currentState || undefined,
       recentExperience: recentExperience || undefined,
       focusDomain,
       observedTension: observedTension || undefined,
     });
-
-    current = reading;
-    readings = [reading, ...readings];
+    const next = [reading, ...readings];
 
     try {
-      await save("bearings-readings", readings);
+      await save("bearings-readings", next);
+      readings = next;
+      current = reading;
+      storageError = false;
+      return true;
     } catch {
       storageError = true;
+      return false;
     }
   }
 
@@ -140,7 +143,7 @@
       </p>
       <p class="emergency-note">{emergency.note}</p>
       <ul class="referral-list">
-        {#each referrals.slice(0, 3) as referral}
+        {#each referrals as referral}
           <li>
             <strong>{referral.name}</strong> — {referral.who} <br />
             <span>{referral.detail}</span>

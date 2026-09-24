@@ -235,6 +235,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
+    min-width: 0;
   }
 
   label {
@@ -247,6 +248,8 @@
 
   select {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     display: block;
     border: 1px solid var(--rule);
     border-radius: var(--radius);
